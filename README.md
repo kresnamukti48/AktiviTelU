@@ -6,4 +6,5 @@
 -   Run `php artisan key:generate`
 -   Set your database credentials in your `.env` file
 -   Run migration `php artisan migrate`
+-   Run Seeding `php artisan db:seed`
 -   SEMANGAT TUBESS!!
