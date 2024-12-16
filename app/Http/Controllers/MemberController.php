@@ -33,17 +33,16 @@ class MemberController extends Controller
      */
     public function create()
     {
+        $user = User::where('id', '!=', auth()->id())->whereDoesntHave('roles', function($query) {
+            $query->whereIn('name', ['Admin', 'Pengurus']);
+        })->get();
         if (auth()->user()->hasRole('Admin')) {
-            $user = User::all();
             $ukm = Ukm::all();
-            return view('members.create', compact('ukm', 'user'));
-        } else if (auth()->user()->hasRole('Pengurus|Dosen')) {
-            $user = User::where('id', '!=', auth()->id())->whereDoesntHave('roles', function($query) {
-                $query->whereIn('name', ['Admin', 'Pengurus', 'Dosen']);
-            })->get();
+            
+        } else if (auth()->user()->hasRole('Pengurus')) {
             $ukm = auth()->user()->ukms;
-            return view('members.create', compact('ukm', 'user'));
         }
+        return view('members.create', compact('ukm', 'user'));
     }
 
     /**
@@ -119,18 +118,39 @@ class MemberController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        $validatedData = $request->validate([
-            'nim' => 'required|numeric',
-            'jurusan' => 'required|string',
-            'angkatan' => 'required',
-            'role_member' => 'required|in:ketua,wakil ketua,anggota',
-        ]);
-
-        Member::findorFail($id)->update($validatedData);
-
-        return redirect()->route('members.index')->with('success', 'Member UKM berhasil diubah');
+    public function update(Request $request, string $id)  
+    {  
+        $validatedData = $request->validate([  
+            'nim' => 'required|numeric',  
+            'jurusan' => 'required|string',  
+            'angkatan' => 'required',  
+            'role_member' => 'required|in:ketua,wakil ketua,anggota',  
+        ]);  
+    
+        $member = Member::findOrFail($id);  
+    
+        // Cek jika role_member diubah menjadi ketua atau wakil ketua  
+        if (in_array($validatedData['role_member'], ['ketua', 'wakil ketua'])) {  
+            // Cek apakah sudah ada ketua atau wakil ketua di UKM ini  
+            if ($validatedData['role_member'] === 'ketua' && Member::where('ukm_id', $member->ukm_id)->where('role_member', 'ketua')->exists() && $member->role_member !== 'ketua') {  
+                return redirect()->back()->with('error', 'Sudah ada ketua di UKM ini');  
+            }  
+    
+            if ($validatedData['role_member'] === 'wakil ketua' && Member::where('ukm_id', $member->ukm_id)->where('role_member', 'wakil ketua')->exists() && $member->role_member !== 'wakil ketua') {  
+                return redirect()->back()->with('error', 'Sudah ada wakil ketua di UKM ini');  
+            }  
+    
+            // Jika tidak ada ketua atau wakil ketua, update role menjadi pengurus  
+            $member->user->syncRoles(Role::ROLE_PENGURUS);  
+        } else {  
+            // Jika role diubah menjadi anggota, hapus role pengurus  
+            $member->user->roles()->detach();  
+        }  
+    
+        // Update data member  
+        $member->update($validatedData);  
+    
+        return redirect()->route('members.index')->with('success', 'Member UKM berhasil diubah');  
     }
 
     /**

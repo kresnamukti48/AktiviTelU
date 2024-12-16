@@ -4,7 +4,13 @@
   <!-- Page Heading -->  
   <h1 class="h3 mb-4 text-gray-800">  
       {{ __('Edit Member: :name', ['name' => $member->user->name]) }}  
-  </h1>  
+  </h1>
+  
+  @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
 
   <div class="card">  
     <div class="card-body">  
