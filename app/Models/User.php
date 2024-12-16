@@ -46,4 +46,14 @@ class User extends Authenticatable
 
         return "{$this->name} {$this->last_name}";
     }
+
+    public function members()  
+    {  
+        return $this->hasMany(Member::class, 'user_id');  
+    }  
+
+    public function ukms()  
+    {  
+        return $this->hasManyThrough(Ukm::class, Member::class, 'user_id', 'id', 'id', 'ukm_id');
+    }
 }
