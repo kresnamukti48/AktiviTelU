@@ -54,6 +54,13 @@ class User extends Authenticatable
 
     public function ukms()  
     {  
-        return $this->hasManyThrough(Ukm::class, Member::class, 'user_id', 'id', 'id', 'ukm_id');
+        // Ambil UKM dari anggota  
+        $memberUkms = $this->hasManyThrough(Ukm::class, Member::class, 'user_id', 'id', 'id', 'ukm_id')->get();  
+    
+        // Ambil UKM dari dosen  
+        $dosenUkms = $this->hasManyThrough(Ukm::class, Dosen::class, 'user_id', 'id', 'id', 'ukm_id')->get();  
+    
+        // Gabungkan kedua koleksi  
+        return $memberUkms->merge($dosenUkms)->unique('id'); // Menghindari duplikasi  
     }
 }

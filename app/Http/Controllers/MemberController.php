@@ -20,7 +20,7 @@ class MemberController extends Controller
             $ukmName = 'Semua Member UKM';
         } else if (auth()->user()->hasRole('Pengurus|Dosen')) {
             // Jika user adalah pengurus, tampilkan event hanya untuk UKM yang dimiliki
-            $ukms = auth()->user()->ukms; // Mendapatkan UKM yang dimiliki oleh user
+            $ukms = auth()->user()->ukms(); // Mendapatkan UKM yang dimiliki oleh user
             $members = Member::whereIn('ukm_id', $ukms->pluck('id'))->get();
             $ukmName = $ukms->isNotEmpty() ? $ukms->first()->nama_ukm : 'UKM Tidak Ditemukan';
         }
@@ -40,7 +40,7 @@ class MemberController extends Controller
             $ukm = Ukm::all();
             
         } else if (auth()->user()->hasRole('Pengurus')) {
-            $ukm = auth()->user()->ukms;
+            $ukm = auth()->user()->ukms();
         }
         return view('members.create', compact('ukm', 'user'));
     }
@@ -104,7 +104,7 @@ class MemberController extends Controller
             $member = Member::findOrFail($id);
 
             // Ambil UKM yang dimiliki oleh pengguna yang sedang login  
-            $userUkmIds = auth()->user()->ukms->pluck('id')->toArray();  
+            $userUkmIds = auth()->user()->ukms()->pluck('id')->toArray();  
 
             // Cek apakah member yang ingin diedit terkait dengan UKM yang sama  
             if (!in_array($member->ukm_id, $userUkmIds)) {   

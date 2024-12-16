@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::FirstOrNew([
+        $user = User::FirstOrCreate([
             'name' => 'Admin',
             'no_telepon' => '08123456789',
             'jenis_kelamin' => 'Laki-Laki',
