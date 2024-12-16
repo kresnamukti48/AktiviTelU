@@ -21,3 +21,11 @@
                 <span>{{ __('Member CRUD') }}</span>
             </a>
         </li>
+
+        <!-- Nav Item - Dosen -->
+        <li class="nav-item {{ Nav::isRoute('dosens.index') }}">
+            <a class="nav-link" href="{{ route('dosens.index') }}">
+                <i class="fas fa-fw fa-plus"></i>
+                <span>{{ __('Dosen CRUD') }}</span>
+            </a>
+        </li>

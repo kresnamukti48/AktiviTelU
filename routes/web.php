@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\UkmController;
 use App\Http\Controllers\MemberController;
-
+use App\Http\Controllers\DosenController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,5 +43,15 @@ Route::middleware('auth')->group(function() {
         Route::get('{id}/edit', [MemberController::class, 'edit'])->name('members.edit');
         Route::put('{id}', [MemberController::class, 'update'])->name('members.update');   
         Route::delete('{id}', [MemberController::class, 'destroy'])->name('members.destroy'); 
+    });
+
+    Route::middleware(['role:Admin'])->prefix('dosen')->group(function () {
+        Route::get('/', [DosenController::class, 'index'])->name('dosens.index');
+        Route::get('/create', [DosenController::class, 'create'])->name('dosens.create');       
+        Route::get('{id}', [DosenController::class, 'show'])->name('dosens.show');      
+        Route::post('/', [DosenController::class, 'store'])->name('dosens.store');      
+        Route::get('{id}/edit', [DosenController::class, 'edit'])->name('dosens.edit');
+        Route::put('{id}', [DosenController::class, 'update'])->name('dosens.update');   
+        Route::delete('{id}', [DosenController::class, 'destroy'])->name('dosens.destroy');
     });
 });
