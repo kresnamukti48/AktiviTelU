@@ -5,6 +5,7 @@ use Spatie\Permission\Models\Role;
 use App\Http\Controllers\UkmController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\EventController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,5 +54,15 @@ Route::middleware('auth')->group(function() {
         Route::get('{id}/edit', [DosenController::class, 'edit'])->name('dosens.edit');
         Route::put('{id}', [DosenController::class, 'update'])->name('dosens.update');   
         Route::delete('{id}', [DosenController::class, 'destroy'])->name('dosens.destroy');
+    });
+
+    Route::middleware(['role:Admin|Pengurus'])->prefix('event')->group(function () {
+        Route::get('/', [EventController::class, 'index'])->name('events.index');
+        Route::get('/create', [EventController::class, 'create'])->name('events.create');       
+        Route::get('{id}', [EventController::class, 'show'])->name('events.show');      
+        Route::post('/', [EventController::class, 'store'])->name('events.store');      
+        Route::get('{id}/edit', [EventController::class, 'edit'])->name('events.edit');
+        Route::put('{id}', [EventController::class, 'update'])->name('events.update');   
+        Route::delete('{id}', [EventController::class, 'destroy'])->name('events.destroy');
     });
 });
