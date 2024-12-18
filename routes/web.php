@@ -5,6 +5,7 @@ use Spatie\Permission\Models\Role;
 use App\Http\Controllers\UkmController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\KegiatanUkmController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,5 +54,14 @@ Route::middleware('auth')->group(function() {
         Route::get('{id}/edit', [DosenController::class, 'edit'])->name('dosens.edit');
         Route::put('{id}', [DosenController::class, 'update'])->name('dosens.update');   
         Route::delete('{id}', [DosenController::class, 'destroy'])->name('dosens.destroy');
+    });
+    Route::middleware(['role:Admin|Pengurus'])->prefix('kegiatan')->group(function () {
+        Route::get('/', [KegiatanUkmController::class, 'index'])->name('kegiatans.index');
+        Route::get('/create', [KegiatanUkmController::class, 'create'])->name('kegiatans.create');       
+        Route::get('{id}', [KegiatanUkmController::class, 'show'])->name('kegiatans.show');      
+        Route::post('/', [KegiatanUkmController::class, 'store'])->name('kegiatans.store');      
+        Route::get('{id}/edit', [KegiatanUkmController::class, 'edit'])->name('kegiatans.edit');
+        Route::put('{id}', [KegiatanUkmController::class, 'update'])->name('kegiatans.update');   
+        Route::delete('{id}', [KegiatanUkmController::class, 'destroy'])->name('kegiatans.destroy');
     });
 });
