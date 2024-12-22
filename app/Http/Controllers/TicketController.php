@@ -15,15 +15,17 @@ class TicketController extends Controller
     {  
         // Jika role user adalah 'admin', maka tampilkan semua tiket  
         if (auth()->user()->hasRole('Admin')) {  
-            $tickets = Ticket::all();  
+            $tickets = Ticket::all();
+            $ukmName = 'Semua Ticket Event';   
         } else if (auth()->user()->hasRole('Pengurus')) {  
             // Jika user adalah pengurus, tampilkan tiket hanya untuk UKM yang dimiliki  
             $ukms = auth()->user()->allUkms(); // Mendapatkan UKM yang dimiliki oleh user  
             $eventIds = Event::whereIn('ukm_id', $ukms->pluck('id'))->pluck('id'); // Mendapatkan ID event berdasarkan UKM  
-            $tickets = Ticket::whereIn('event_id', $eventIds)->get(); // Mendapatkan tiket berdasarkan ID event  
+            $tickets = Ticket::whereIn('event_id', $eventIds)->get(); // Mendapatkan tiket berdasarkan ID event
+            $ukmName = $ukms->isNotEmpty() ? $ukms->first()->nama_ukm : 'UKM Tidak Ditemukan';  
         }  
 
-        return view('tickets.index', compact('tickets'));  
+        return view('tickets.index', compact('tickets', 'ukmName'));  
     }  
 
     /**  

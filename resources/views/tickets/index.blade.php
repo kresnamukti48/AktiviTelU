@@ -2,7 +2,7 @@
 
 @section('main-content')  
     <h1 class="h3 mb-4 text-gray-800">  
-        {{ $title ?? __('CRUD Tickets for Event') }}  
+        {{ $title ?? __('CRUD Ticket :ukm', ['ukm' => $ukmName]) }}  
     </h1>  
 
     <a href="{{ route('tickets.create') }}" class="btn btn-primary mb-3">New Ticket</a>  
