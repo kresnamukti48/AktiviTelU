@@ -39,7 +39,8 @@ Route::middleware('auth')->group(function() {
         Route::delete('{id}', [UkmController::class, 'destroy'])->name('ukms.destroy');  
     });  
 
-    Route::middleware(['role:Admin|Pengurus'])->prefix('member')->group(function () {  
+    Route::middleware(['role:Admin|Pengurus'])->prefix('member')->group(function () {
+        Route::get('/export', [MemberController::class, 'export'])->name('members.export');  
         Route::get('/', [MemberController::class, 'index'])->name('members.index');  
         Route::get('/create', [MemberController::class, 'create'])->name('members.create');       
         Route::get('{id}', [MemberController::class, 'show'])->name('members.show');      
