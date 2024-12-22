@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;  
 
 use Illuminate\Http\Request;  
-use App\Models\Ticket; // Pastikan Anda mengimpor model Ticket  
-use App\Models\Event; // Pastikan Anda mengimpor model Event  
+use App\Models\Ticket; 
+use App\Models\Event; 
+use App\Exports\TicketExport;
+use Maatwebsite\Excel\Facades\Excel;  
 
 class TicketController extends Controller  
 {  
@@ -19,7 +21,7 @@ class TicketController extends Controller
             $ukmName = 'Semua Ticket Event';   
         } else if (auth()->user()->hasRole('Pengurus')) {  
             // Jika user adalah pengurus, tampilkan tiket hanya untuk UKM yang dimiliki  
-            $ukms = auth()->user()->allUkms(); // Mendapatkan UKM yang dimiliki oleh user  
+            $ukms = auth()->user()->ukms(); // Mendapatkan UKM yang dimiliki oleh user  
             $eventIds = Event::whereIn('ukm_id', $ukms->pluck('id'))->pluck('id'); // Mendapatkan ID event berdasarkan UKM  
             $tickets = Ticket::whereIn('event_id', $eventIds)->get(); // Mendapatkan tiket berdasarkan ID event
             $ukmName = $ukms->isNotEmpty() ? $ukms->first()->nama_ukm : 'UKM Tidak Ditemukan';  
@@ -37,7 +39,7 @@ class TicketController extends Controller
             $events = Event::all();  
         } else if (auth()->user()->hasRole('Pengurus')) {  
             // Ambil UKM yang dimiliki oleh pengguna  
-            $ukms = auth()->user()->allUkms();  
+            $ukms = auth()->user()->ukms();  
             // Ambil event yang terkait dengan UKM tersebut  
             $eventIds = Event::whereIn('ukm_id', $ukms->pluck('id'))->pluck('id');  
             $events = Event::whereIn('id', $eventIds)->get(); // Mendapatkan event berdasarkan ID  
@@ -83,7 +85,7 @@ class TicketController extends Controller
             $events = Event::all();  
         } else if (auth()->user()->hasRole('Pengurus')) {  
             // Ambil UKM yang dimiliki oleh pengguna  
-            $ukms = auth()->user()->allUkms();  
+            $ukms = auth()->user()->ukms();  
             // Ambil event yang terkait dengan UKM tersebut  
             $eventIds = Event::whereIn('ukm_id', $ukms->pluck('id'))->pluck('id');
             // Cek apakah event tiket termasuk dalam event yang dimiliki oleh UKM pengguna  
@@ -123,4 +125,17 @@ class TicketController extends Controller
 
         return redirect()->route('tickets.index')->with('success', 'Tiket berhasil dihapus');  
     }  
+
+    public function export(Request $request)  
+    {  
+        if (auth()->user()->hasRole('Admin')) {
+            $ticket = Ticket::all();
+        } else if (auth()->user()->hasRole('Pengurus')) {
+            $ukms = auth()->user()->ukms();
+            $eventIds = Event::whereIn('ukm_id', $ukms->pluck('id'))->pluck('id');
+            $ticket = Ticket::whereIn('event_id', $eventIds)->get();
+        }
+    
+        return Excel::download(new TicketExport($ticket), 'tickets.xlsx');
+    }
 }

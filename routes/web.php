@@ -80,6 +80,7 @@ Route::middleware('auth')->group(function() {
     });
 
     Route::middleware(['role:Admin|Pengurus'])->prefix('ticket')->group(function () {
+        Route::get('/export', [TicketController::class, 'export'])->name('tickets.export');
         Route::get('/', [TicketController::class, 'index'])->name('tickets.index');
         Route::get('/create', [TicketController::class, 'create'])->name('tickets.create');       
         Route::get('{id}', [TicketController::class, 'show'])->name('tickets.show');      
