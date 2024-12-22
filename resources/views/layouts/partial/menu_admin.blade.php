@@ -45,3 +45,11 @@
         <span>{{ __('Event CRUD') }}</span>  
     </a>  
 </li>
+
+<!-- Nav Item - Ticket -->
+<li class="nav-item {{ Nav::isRoute('tickets.index') }}">
+    <a class="nav-link" href="{{ route('tickets.index') }}">
+        <i class="fas fa-fw fa-plus"></i>
+            <span>{{ __('Ticket CRUD') }}</span>
+    </a>
+</li>

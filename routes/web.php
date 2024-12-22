@@ -6,7 +6,8 @@ use App\Http\Controllers\UkmController;
 use App\Http\Controllers\MemberController;  
 use App\Http\Controllers\DosenController;  
 use App\Http\Controllers\KegiatanUkmController;  
-use App\Http\Controllers\EventController;  
+use App\Http\Controllers\EventController; 
+use App\Http\Controllers\TicketController; 
 
 /*  
 |--------------------------------------------------------------------------  
@@ -38,7 +39,8 @@ Route::middleware('auth')->group(function() {
         Route::delete('{id}', [UkmController::class, 'destroy'])->name('ukms.destroy');  
     });  
 
-    Route::middleware(['role:Admin|Pengurus'])->prefix('member')->group(function () {  
+    Route::middleware(['role:Admin|Pengurus'])->prefix('member')->group(function () {
+        Route::get('/export', [MemberController::class, 'export'])->name('members.export');  
         Route::get('/', [MemberController::class, 'index'])->name('members.index');  
         Route::get('/create', [MemberController::class, 'create'])->name('members.create');       
         Route::get('{id}', [MemberController::class, 'show'])->name('members.show');      
@@ -76,5 +78,16 @@ Route::middleware('auth')->group(function() {
         Route::get('{id}/edit', [EventController::class, 'edit'])->name('events.edit');  
         Route::put('{id}', [EventController::class, 'update'])->name('events.update');   
         Route::delete('{id}', [EventController::class, 'destroy'])->name('events.destroy');  
+    });
+
+    Route::middleware(['role:Admin|Pengurus'])->prefix('ticket')->group(function () {
+        Route::get('/export', [TicketController::class, 'export'])->name('tickets.export');
+        Route::get('/', [TicketController::class, 'index'])->name('tickets.index');
+        Route::get('/create', [TicketController::class, 'create'])->name('tickets.create');       
+        Route::get('{id}', [TicketController::class, 'show'])->name('tickets.show');      
+        Route::post('/', [TicketController::class, 'store'])->name('tickets.store');      
+        Route::get('{id}/edit', [TicketController::class, 'edit'])->name('tickets.edit');
+        Route::put('{id}', [TicketController::class, 'update'])->name('tickets.update');   
+        Route::delete('{id}', [TicketController::class, 'destroy'])->name('tickets.destroy');
     });  
 });

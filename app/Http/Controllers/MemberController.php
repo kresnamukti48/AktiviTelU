@@ -7,6 +7,8 @@ use App\Models\Member;
 use App\Models\User;
 use App\Models\UKM;
 use App\Models\Role;
+use App\Exports\MemberExport;
+use Maatwebsite\Excel\Facades\Excel;  
 
 class MemberController extends Controller
 {
@@ -165,5 +167,17 @@ class MemberController extends Controller
         $member->delete();  
 
         return redirect()->route('members.index')->with('success', 'Member UKM berhasil dihapus');
+    }
+
+    public function export(Request $request)  
+    {  
+        if (auth()->user()->hasRole('Admin')) {
+            $member = Member::all();
+        } else if (auth()->user()->hasRole('Pengurus')) {
+            $ukms = auth()->user()->ukms();
+            $member = Member::whereIn('ukm_id', $ukms->pluck('id'))->get();
+        }
+    
+        return Excel::download(new MemberExport($member), 'members.xlsx');
     }
 }

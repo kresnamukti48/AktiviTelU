@@ -6,6 +6,7 @@
     </h1>  
 
     <a href="{{ route('members.create') }}" class="btn btn-primary mb-3">New Member</a>
+    <a href="{{ route('members.export') }}" class="btn btn-success mb-3">Export</a>
 
     @if (session('success'))
         <div class="alert alert-success">
@@ -35,7 +36,7 @@
                     <td scope="row">{{ $loop->iteration }}</td>
                     <td>{{ $member->user->name }}</td>
                     <td>{{ $member->ukm->nama_ukm }}</td>
-                    <td>{{ $member->role_member }}</td>
+                    <td>{{ ucfirst($member->role_member) }}</td>
                     <td>
                         <div class="d-flex">
                             <a href="{{ route('members.edit', $member->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
