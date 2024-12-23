@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\KegiatanUkm;
 use App\Models\Ukm;
+use App\Exports\KegiatanUkmExport;
+use Maatwebsite\Excel\Facades\Excel;  
 
 class KegiatanUkmController extends Controller
 {
@@ -169,5 +171,16 @@ class KegiatanUkmController extends Controller
         $kegiatans->delete();  
 
         return redirect()->route('kegiatans.index')->with('success', 'Kegiatan UKM berhasil dihapus');
+    }
+    public function export(Request $request)  
+    {  
+        if (auth()->user()->hasRole('Admin')) {
+            $kegiatan = KegiatanUkm::all();
+        } else if (auth()->user()->hasRole('Pengurus')) {
+            $ukms = auth()->user()->ukms();
+            $kegiatan = KegiatanUkm::whereIn('ukm_id', $ukms->pluck('id'))->get();
+        }
+    
+        return Excel::download(new KegiatanUkmExport($kegiatan), 'KegiatanUkm.xlsx');
     }
 }

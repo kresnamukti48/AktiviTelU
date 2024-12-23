@@ -60,7 +60,8 @@ Route::middleware('auth')->group(function() {
         Route::delete('{id}', [DosenController::class, 'destroy'])->name('dosens.destroy');  
     });  
 
-    Route::middleware(['role:Admin|Pengurus'])->prefix('kegiatan')->group(function () {  
+    Route::middleware(['role:Admin|Pengurus'])->prefix('kegiatan')->group(function () {
+        Route::get('/export', [KegiatanUkmController::class, 'export'])->name('kegiatans.export');
         Route::get('/', [KegiatanUkmController::class, 'index'])->name('kegiatans.index');  
         Route::get('/create', [KegiatanUkmController::class, 'create'])->name('kegiatans.create');       
         Route::get('{id}', [KegiatanUkmController::class, 'show'])->name('kegiatans.show');      
