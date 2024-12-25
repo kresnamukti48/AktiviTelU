@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function() {
     });  
 
     Route::middleware(['role:Admin'])->prefix('dosen')->group(function () {  
+        Route::get('/export', [DosenController::class, 'export'])->name('dosens.export');
         Route::get('/', [DosenController::class, 'index'])->name('dosens.index');  
         Route::get('/create', [DosenController::class, 'create'])->name('dosens.create');       
         Route::get('{id}', [DosenController::class, 'show'])->name('dosens.show');      

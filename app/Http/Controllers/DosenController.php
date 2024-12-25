@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Dosen;
 use App\Models\User;
 use App\Models\Ukm;
+use App\Exports\DosenExport;
+use Maatwebsite\Excel\Facades\Excel;  
 
 class DosenController extends Controller
 {
@@ -100,5 +102,11 @@ class DosenController extends Controller
         $dosen->delete();  
 
         return redirect()->route('dosens.index')->with('success', 'Dosen berhasil dihapus');
+    }
+    public function export(Request $request)  
+    {  
+        $dosen = Dosen::all();
+    
+        return Excel::download(new DosenExport($dosen), 'dosens.xlsx');
     }
 }
