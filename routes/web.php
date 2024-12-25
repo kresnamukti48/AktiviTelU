@@ -72,6 +72,7 @@ Route::middleware('auth')->group(function() {
     });  
 
     Route::middleware(['role:Admin|Pengurus'])->prefix('event')->group(function () {  
+        Route::get('/export', [EventController::class, 'export'])->name('events.export');  
         Route::get('/', [EventController::class, 'index'])->name('events.index');  
         Route::get('/create', [EventController::class, 'create'])->name('events.create');       
         Route::get('{id}', [EventController::class, 'show'])->name('events.show');      
