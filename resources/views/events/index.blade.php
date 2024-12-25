@@ -7,6 +7,7 @@
     </h1>
 
     <a href="{{ route('events.create') }}" class="btn btn-primary mb-3">New Event</a>
+    <a href="{{ route('events.export') }}" class="btn btn-success mb-3">Export</a>
 
     @if (session('success'))
         <div class="alert alert-success">

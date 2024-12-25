@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\UKM;
+use App\Exports\EventExport;
+use Maatwebsite\Excel\Facades\Excel;  
 
 class EventController extends Controller
 {
@@ -167,5 +169,17 @@ class EventController extends Controller
         $events->delete();
 
         return redirect()->route('events.index')->with('success', 'Event berhasil dihapus');
+    }
+
+    public function export(Request $request)  
+    {  
+        if (auth()->user()->hasRole('Admin')) {
+            $event = Event::all();
+        } else if (auth()->user()->hasRole('Pengurus')) {
+            $ukms = auth()->user()->ukms();
+            $event = Event::whereIn('ukm_id', $ukms->pluck('id'))->get();
+        }
+    
+        return Excel::download(new EventExport($event), 'events.xlsx');
     }
 }
