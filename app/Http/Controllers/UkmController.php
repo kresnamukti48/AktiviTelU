@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ukm;
+use App\Exports\UkmExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UkmController extends Controller
 {
@@ -128,5 +130,10 @@ class UkmController extends Controller
         $ukms->delete();  
     
         return redirect()->route('ukms.index')->with('success', 'UKM berhasil dihapus');
+    }
+    public function export(Request $request)  
+    {  
+        $ukm = Ukm::all();
+        return Excel::download(new UkmExport($ukm), 'ukms.xlsx');
     }
 }

@@ -4,6 +4,7 @@
     <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('UKM CRUD') }}</h1>
 
     <a href="{{ route('ukms.create') }}" class="btn btn-primary mb-3">New UKM</a>
+    <a href="{{ route('ukms.export') }}" class="btn btn-success mb-3">Export</a>
 
     @if (session('success'))
         <div class="alert alert-success">
