@@ -53,3 +53,12 @@
             <span>{{ __('Ticket CRUD') }}</span>
     </a>
 </li>
+
+<!-- Nav Item - Checkout -->
+<li class="nav-item {{ Nav::isRoute('checkouts.index') }}">
+    <a class="nav-link" href="{{ route('checkouts.index') }}">
+        <i class="fas fa-fw fa-plus"></i>
+            <span>{{ __('Transaksi') }}</span>
+    </a>
+</li>
+
