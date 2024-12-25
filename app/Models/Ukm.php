@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Ukm extends Model
 {
     use HasFactory;
-    protected $fillable = ['nama_ukm', 'deskripsi_ukm', 'logo_ukm'];
+    protected $fillable = ['nama_ukm', 'deskripsi_ukm', 'kategori_ukm', 'instagram_ukm', 'email_ukm', 'logo_ukm'];
 }

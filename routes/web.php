@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function() {
     Route::resource('basic', BasicController::class);  
     
     Route::middleware(['role:Admin'])->prefix('ukm')->group(function () {  
+        Route::get('/export', [UkmController::class, 'export'])->name('ukms.export');
         Route::get('/', [UkmController::class, 'index'])->name('ukms.index');  
         Route::get('/create', [UkmController::class, 'create'])->name('ukms.create');       
         Route::get('{id}', [UkmController::class, 'show'])->name('ukms.show');      
