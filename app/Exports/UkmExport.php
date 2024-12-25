@@ -39,6 +39,9 @@ class UkmExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
             ++$this->rowNumber,
             $ukm->nama_ukm,
             $ukm->deskripsi_ukm,
+            $ukm->kategori_ukm,
+            $ukm->instagram_ukm,
+            $ukm->email_ukm,
             Date::dateTimeToExcel($ukm->created_at),
         ];
     }
@@ -49,6 +52,9 @@ class UkmExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
             '#',
             'Nama UKM',
             'Deskripsi',
+            'Kategori',
+            'Instagram',
+            'Email',
             'Tanggal Dibuat',
         ];
     }
@@ -56,7 +62,7 @@ class UkmExport implements FromCollection, WithMapping, WithHeadings, ShouldAuto
     public function columnFormats(): array
     {
         return [
-            'D' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'G' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         ];
     }
 }
