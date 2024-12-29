@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use App\Models\EventUser;
 use App\Models\Member;
 use App\Models\Role;
 use App\Models\Ukm;
@@ -91,48 +90,19 @@ class HomeController extends Controller
             ]);
     }
 
-    public function event()
-    {
-        return view('user.event', [
-            'userRegisteredEvents' => EventUser::where('user_id', Auth::id())
-                ->pluck('event_id')
-                ->toArray(),
-            'events' => Event::query()
-                ->orderByDesc('created_at')
-                ->get(),
-        ]);
-    }
+    public function event()  
+    {  
+    
+        // Ambil semua event beserta info stok tiketnya  
+        $events = Event::with(['tiket' => function($query) {  
+            $query->select('event_id', 'stok_tiket', 'status', 'id'); // Ambil stok tiket dan status  
+        }])  
+        ->orderByDesc('created_at')  
+        ->get();  
+    
+        return view('user.event', [  
+            'events' => $events,  
+        ]);  
+    }    
 
-    public function joinEvent(Request $request, Event $event)
-    {
-        $request->validate([
-            'file' => 'required|file',
-        ]);
-
-        try {
-            $userId = Auth::id();
-
-            $imageExtension = $request->file('file')->getClientOriginalExtension();
-            $imageName = "bukti-pembayaran-event-{$event->id}-user-{$userId}.{$imageExtension}";
-
-            $request->file('file')->move(public_path('bukti-pembayaran'), $imageName);
-
-            EventUser::create([
-                'user_id' => Auth::id(),
-                'event_id' => $event->id,
-                'bukti_pembayaran' => 'bukti-pembayaran/' . $imageName,
-            ]);
-        } catch (\Throwable $th) {
-            return back()
-                ->withInput()
-                ->with('error', [
-                    'message' => 'Gagal mendaftar event: ' . $th->getMessage(),
-                ]);
-        }
-
-        return back()
-            ->with('success', [
-                'message' => 'Berhasil mendaftar event',
-            ]);
-    }
 }

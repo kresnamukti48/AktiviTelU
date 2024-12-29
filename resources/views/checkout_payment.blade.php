@@ -16,7 +16,7 @@
                     snap.pay('{{ $snapToken }}', {  
                         onSuccess: function(result) {  
                             alert('Pembayaran berhasil!');
-                            window.location.href = '/ticket';
+                            window.location.href = '/home';
                         },  
                         onPending: function(result) {  
                             alert('Menunggu pembayaran!');  

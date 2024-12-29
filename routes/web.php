@@ -104,9 +104,8 @@ Route::middleware('auth')->group(function() {
         Route::delete('{id}', [TicketController::class, 'destroy'])->name('tickets.destroy');
     });  
 
-    Route::middleware(['role:Admin|Pengurus'])->prefix('checkout')->group(function () {
+    Route::middleware(['role:Admin|Pengurus|Member'])->prefix('checkout')->group(function () {
         Route::get('/', [CheckoutController::class, 'index'])->name('checkouts.index');
-        Route::get('/{ticket}', [CheckoutController::class, 'showCheckoutForm'])->name('checkout.index');
         Route::post('/', [CheckoutController::class, 'processCheckout'])->name('checkout.process');  
     }); 
 });

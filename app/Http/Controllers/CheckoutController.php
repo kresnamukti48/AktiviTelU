@@ -30,10 +30,6 @@ class CheckoutController extends Controller
 
     }  
 
-    public function showCheckoutForm(Ticket $ticket)  
-    {  
-        return view('checkout', compact('ticket'));  
-    }  
     
     public function processCheckout(Request $request)  
     {

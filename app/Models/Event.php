@@ -15,4 +15,9 @@ class Event extends Model
     {
         return $this->belongsTo(Ukm::class, 'ukm_id');
     }
+
+    public function tiket()  
+    {  
+        return $this->hasMany(Ticket::class, 'event_id', 'id'); // Pastikan nama model dan kolom virasi yang tepat  
+    }  
 }
