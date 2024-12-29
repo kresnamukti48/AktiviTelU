@@ -4,7 +4,7 @@
     <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Dosen CRUD') }}</h1>  
 
     <a href="{{ route('dosens.create') }}" class="btn btn-primary mb-3">New Dosen</a>  
-
+    <a href="{{ route('dosens.export') }}" class="btn btn-success mb-3">Export</a>
     @if (session('success'))  
         <div class="alert alert-success">  
             {{ session('success') }}  

@@ -6,7 +6,8 @@ use App\Http\Controllers\UkmController;
 use App\Http\Controllers\MemberController;  
 use App\Http\Controllers\DosenController;  
 use App\Http\Controllers\KegiatanUkmController;  
-use App\Http\Controllers\EventController; 
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TicketController; 
 
 /*  
@@ -24,12 +25,20 @@ Route::get('/', function () {
     return view('welcome');  
 });  
 
-Route::get('/home', 'HomeController@index')->name('home');  
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/ukm/{ukm}', 'HomeController@ukm')->name('home.ukm');
+Route::post('/home/ukm/{ukm}', 'HomeController@join')->name('home.ukm.join');
+
+Route::get('/home/event', 'HomeController@event')->name('home.event');
+Route::post('/home/event/{event}', 'HomeController@joinEvent')->name('home.event.join');
+
+Route::get('/logout', 'LogoutController@logout')->name('logout');
 
 Route::middleware('auth')->group(function() {  
     Route::resource('basic', BasicController::class);  
     
     Route::middleware(['role:Admin'])->prefix('ukm')->group(function () {  
+        Route::get('/export', [UkmController::class, 'export'])->name('ukms.export');
         Route::get('/', [UkmController::class, 'index'])->name('ukms.index');  
         Route::get('/create', [UkmController::class, 'create'])->name('ukms.create');       
         Route::get('{id}', [UkmController::class, 'show'])->name('ukms.show');      
@@ -51,6 +60,7 @@ Route::middleware('auth')->group(function() {
     });  
 
     Route::middleware(['role:Admin'])->prefix('dosen')->group(function () {  
+        Route::get('/export', [DosenController::class, 'export'])->name('dosens.export');
         Route::get('/', [DosenController::class, 'index'])->name('dosens.index');  
         Route::get('/create', [DosenController::class, 'create'])->name('dosens.create');       
         Route::get('{id}', [DosenController::class, 'show'])->name('dosens.show');      
