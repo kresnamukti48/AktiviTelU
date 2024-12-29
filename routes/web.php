@@ -6,7 +6,8 @@ use App\Http\Controllers\UkmController;
 use App\Http\Controllers\MemberController;  
 use App\Http\Controllers\DosenController;  
 use App\Http\Controllers\KegiatanUkmController;  
-use App\Http\Controllers\EventController; 
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TicketController; 
 use App\Http\Controllers\CheckoutController;
 
@@ -25,7 +26,14 @@ Route::get('/', function () {
     return view('welcome');  
 });  
 
-Route::get('/home', 'HomeController@index')->name('home');  
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/ukm/{ukm}', 'HomeController@ukm')->name('home.ukm');
+Route::post('/home/ukm/{ukm}', 'HomeController@join')->name('home.ukm.join');
+
+Route::get('/home/event', 'HomeController@event')->name('home.event');
+Route::post('/home/event/{event}', 'HomeController@joinEvent')->name('home.event.join');
+
+Route::get('/logout', 'LogoutController@logout')->name('logout');
 
 Route::middleware('auth')->group(function() {  
     Route::resource('basic', BasicController::class);  

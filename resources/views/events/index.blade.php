@@ -79,6 +79,31 @@
                             <li>Gambar: <br>
                                 <img src="{{ asset($event->gambar_event) }}" alt="{{ $event->nama_event }}" width="100"></li>
                         </ul>
+
+                        <h5>Peserta</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>No Telepon</th>
+                                    <th>Bukti Pembayaran</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($event->event_users as $eventUser)
+                                    <tr>
+                                        <td scope="row">{{ $loop->iteration }}</td>
+                                        <td>{{ $eventUser->user->name }}</td>
+                                        <td>{{ $eventUser->user->no_telepon }}</td>
+                                        <td>
+                                            <a href="{{ asset($eventUser->bukti_pembayaran) }}" target="_blank">Lihat Bukti Pembayaran</a>
+                                        </td>
+                                    </tr>
+
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

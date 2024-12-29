@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
+use App\Models\EventUser;
+use App\Models\Member;
+use App\Models\Role;
+use App\Models\Ukm;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -31,6 +37,102 @@ class HomeController extends Controller
             //...
         ];
 
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        // Menampilkan halaman member
+        if ($user->hasRole(Role::ROLE_MEMBER)) {
+            return view('user.home', [
+                'ukms' => Ukm::all(),
+            ]);
+        }
+
         return view('home', compact('widget'));
+    }
+
+    public function ukm(Ukm $ukm)
+    {
+        $hasJoinedUkm = Member::where('user_id', Auth::id())
+            ->where('ukm_id', $ukm->id)
+            ->exists();
+
+        return view('user.ukm', [
+            'ukm' => $ukm,
+            'hasJoinedUkm' => $hasJoinedUkm,
+            'ukms' => Ukm::all(),
+        ]);
+    }
+
+    public function join(Request $request, Ukm $ukm)
+    {
+        $data = $request->validate([
+            'nim' => 'required|string',
+            'jurusan' => 'required|string',
+            'angkatan' => 'required|numeric',
+        ]);
+
+        try {
+            $data['user_id'] = Auth::id();
+            $data['ukm_id'] = $ukm->id;
+            $data['role_member'] = 'anggota';
+
+            Member::create($data);
+        } catch (\Throwable $th) {
+            return back()
+                ->withInput()
+                ->with('error', [
+                    'message' => 'Gagal bergabung dengan UKM: ' . $th->getMessage(),
+                ]);
+        }
+
+        return back()
+            ->with('success', [
+                'message' => 'Berhasil bergabung dengan UKM',
+            ]);
+    }
+
+    public function event()
+    {
+        return view('user.event', [
+            'userRegisteredEvents' => EventUser::where('user_id', Auth::id())
+                ->pluck('event_id')
+                ->toArray(),
+            'events' => Event::query()
+                ->orderByDesc('created_at')
+                ->get(),
+        ]);
+    }
+
+    public function joinEvent(Request $request, Event $event)
+    {
+        $request->validate([
+            'file' => 'required|file',
+        ]);
+
+        try {
+            $userId = Auth::id();
+
+            $imageExtension = $request->file('file')->getClientOriginalExtension();
+            $imageName = "bukti-pembayaran-event-{$event->id}-user-{$userId}.{$imageExtension}";
+
+            $request->file('file')->move(public_path('bukti-pembayaran'), $imageName);
+
+            EventUser::create([
+                'user_id' => Auth::id(),
+                'event_id' => $event->id,
+                'bukti_pembayaran' => 'bukti-pembayaran/' . $imageName,
+            ]);
+        } catch (\Throwable $th) {
+            return back()
+                ->withInput()
+                ->with('error', [
+                    'message' => 'Gagal mendaftar event: ' . $th->getMessage(),
+                ]);
+        }
+
+        return back()
+            ->with('success', [
+                'message' => 'Berhasil mendaftar event',
+            ]);
     }
 }
