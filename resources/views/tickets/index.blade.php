@@ -40,7 +40,8 @@
                     <td>{{ $ticket->stok_tiket }}</td>  
                     <td>{{ ucfirst($ticket->status) }}</td>  
                     <td>  
-                        <div class="d-flex">  
+                        <div class="d-flex">
+                            <a href="{{ route('checkout.index', $ticket->id) }}" class="btn btn-sm btn-success mr-2">Checkout</a>    
                             <a href="{{ route('tickets.edit', $ticket->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>  
                             <!-- Trigger Modal -->  
                             <button type="button" class="btn btn-sm btn-info mr-2" data-toggle="modal" data-target="#ticketDetailModal-{{ $ticket->id }}">Detail</button>  
@@ -50,7 +51,7 @@
                                 @method('delete')  
                                 <button type="submit" class="btn btn-sm btn-danger"  
                                     onclick="return confirm('Are you sure to delete this?')">Delete</button>  
-                            </form>  
+                            </form>
                         </div>  
                     </td>  
                 </tr>  

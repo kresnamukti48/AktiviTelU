@@ -8,6 +8,7 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\KegiatanUkmController;  
 use App\Http\Controllers\EventController; 
 use App\Http\Controllers\TicketController; 
+use App\Http\Controllers\CheckoutController;
 
 /*  
 |--------------------------------------------------------------------------  
@@ -94,4 +95,12 @@ Route::middleware('auth')->group(function() {
         Route::put('{id}', [TicketController::class, 'update'])->name('tickets.update');   
         Route::delete('{id}', [TicketController::class, 'destroy'])->name('tickets.destroy');
     });  
+
+    Route::middleware(['role:Admin|Pengurus'])->prefix('checkout')->group(function () {
+        Route::get('/', [CheckoutController::class, 'index'])->name('checkouts.index');
+        Route::get('/{ticket}', [CheckoutController::class, 'showCheckoutForm'])->name('checkout.index');
+        Route::post('/', [CheckoutController::class, 'processCheckout'])->name('checkout.process');  
+    }); 
 });
+
+Route::post('midtrans/notification', [CheckoutController::class, 'handleNotification']);    
