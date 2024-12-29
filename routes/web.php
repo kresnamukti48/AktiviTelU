@@ -33,6 +33,10 @@ Route::post('/home/ukm/{ukm}', 'HomeController@join')->name('home.ukm.join');
 Route::get('/home/event', 'HomeController@event')->name('home.event');
 Route::post('/home/event/{event}', 'HomeController@joinEvent')->name('home.event.join');
 
+Route::get('/home/ukm/kategori/{kategori}', [UkmController::class, 'listByCategory'])->name('ukm.listByCategory');
+Route::get('/ukm/search', [UkmController::class, 'search'])->name('ukm.search');  
+
+
 Route::get('/logout', 'LogoutController@logout')->name('logout');
 
 Route::middleware('auth')->group(function() {  

@@ -6,6 +6,8 @@ use App\Models\Event;
 use App\Models\Member;
 use App\Models\Role;
 use App\Models\Ukm;
+use App\Models\Dosen;
+use App\Models\KegiatanUkm;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,26 +42,51 @@ class HomeController extends Controller
         $user = Auth::user();
 
         // Menampilkan halaman member
-        if ($user->hasRole(Role::ROLE_MEMBER)) {
-            return view('user.home', [
-                'ukms' => Ukm::all(),
-            ]);
+        if ($user->hasRole(Role::ROLE_MEMBER)) {  
+            $ukms = Ukm::withCount(['members', 'kegiatan'])->get();   
+            $ukmcount = Ukm::count();
+            $kegiatan = KegiatanUkm::count();  
+            $event = Event::count();
+            $ukmCounts = [  
+                'sosial' => Ukm::where('kategori_ukm', 'sosial')->count(),  
+                'kesenian' => Ukm::where('kategori_ukm', 'kesenian')->count(),  
+                'penalaran' => Ukm::where('kategori_ukm', 'penalaran')->count(),  
+                'olahraga' => Ukm::where('kategori_ukm', 'olahraga')->count(),  
+                'kerohanian' => Ukm::where('kategori_ukm', 'kerohanian')->count(),  
+            ];  
+            return view('user.home', compact('ukms', 'ukmCounts', 'ukmcount', 'kegiatan', 'event'));  
         }
 
         return view('home', compact('widget'));
     }
 
-    public function ukm(Ukm $ukm)
-    {
-        $hasJoinedUkm = Member::where('user_id', Auth::id())
-            ->where('ukm_id', $ukm->id)
-            ->exists();
-
-        return view('user.ukm', [
-            'ukm' => $ukm,
-            'hasJoinedUkm' => $hasJoinedUkm,
-            'ukms' => Ukm::all(),
-        ]);
+    public function ukm(Ukm $ukm)  
+    {  
+        // Cek apakah pengguna sudah bergabung dengan UKM  
+        $hasJoinedUkm = Member::where('user_id', Auth::id())  
+            ->where('ukm_id', $ukm->id)  
+            ->exists();  
+    
+        // Muat data UKM dengan jumlah anggota, kegiatan, dan dosen  
+        $ukm->loadCount(['members', 'kegiatan', 'dosens']); // Pastikan ada relasi 'dosen' dalam model Ukm  
+    
+        // Ambil ketua dan wakil ketua  
+        $ketua = $ukm->members()->where('role_member', 'ketua')->with('user')->first();  
+        $wakilKetua = $ukm->members()->where('role_member', 'wakil ketua')->with('user')->first(); 
+        
+        $dosen = $ukm->dosens()->with('user')->first();
+    
+        // Ambil semua UKM  
+        $ukms = Ukm::withCount(['members', 'kegiatan'])->get();  
+    
+        return view('user.ukm', [  
+            'ukm' => $ukm,  
+            'hasJoinedUkm' => $hasJoinedUkm,  
+            'ukms' => $ukms,  
+            'ketua' => $ketua,  
+            'wakilKetua' => $wakilKetua,  
+            'dosen' => $dosen,
+        ]);  
     }
 
     public function join(Request $request, Ukm $ukm)
