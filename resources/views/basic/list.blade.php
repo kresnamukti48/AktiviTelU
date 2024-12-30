@@ -7,6 +7,7 @@
     <!-- Main Content goes here -->
 
     <a href="{{ route('basic.create') }}" class="btn btn-primary mb-3">New User</a>
+    <a href="{{ route('basic.export') }}" class="btn btn-success mb-3">Export</a>
 
     @if (session('message'))
         <div class="alert alert-success">

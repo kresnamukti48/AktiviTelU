@@ -10,6 +10,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TicketController; 
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\BasicController;
 
 /*  
 |--------------------------------------------------------------------------  
@@ -40,7 +41,10 @@ Route::get('/ukm/search', [UkmController::class, 'search'])->name('ukm.search');
 Route::get('/logout', 'LogoutController@logout')->name('logout');
 
 Route::middleware('auth')->group(function() {  
-    Route::resource('basic', BasicController::class);  
+    Route::middleware(['role:Admin'])->group(function () {  
+        Route::get('/export', [BasicController::class, 'export'])->name('basic.export');
+        Route::resource('basic', BasicController::class);
+    });  
     
     Route::middleware(['role:Admin'])->prefix('ukm')->group(function () {  
         Route::get('/export', [UkmController::class, 'export'])->name('ukms.export');
