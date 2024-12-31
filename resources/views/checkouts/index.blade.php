@@ -16,6 +16,7 @@
             {{ session('error') }}  
         </div>  
     @endif  
+    <a href="{{ route('checkouts.export') }}" class="btn btn-success mb-3">Export</a>
 
     <table class="table table-bordered table-striped">  
         <thead>  

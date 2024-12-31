@@ -113,6 +113,7 @@ Route::middleware('auth')->group(function() {
     });  
 
     Route::middleware(['role:Admin|Pengurus|Member'])->prefix('checkout')->group(function () {
+        Route::get('/export', [CheckoutController::class, 'export'])->name('checkouts.export');
         Route::get('/', [CheckoutController::class, 'index'])->name('checkouts.index');
         Route::post('/', [CheckoutController::class, 'processCheckout'])->name('checkout.process');  
     }); 

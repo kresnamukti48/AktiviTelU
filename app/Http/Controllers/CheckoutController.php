@@ -8,7 +8,9 @@ use Midtrans\Snap;
 use App\Models\Checkout;   
 use App\Models\Ticket;
 use App\Models\Event;
-use Midtrans\Notification;  
+use Midtrans\Notification;
+use App\Exports\TransaksiExport;  
+use Maatwebsite\Excel\Facades\Excel;  
 
 class CheckoutController extends Controller  
 {  
@@ -164,5 +166,19 @@ class CheckoutController extends Controller
                 $ticket->save(); // Simpan perubahan  
                 }
             } 
-        }  
+        }
+        public function export(Request $request)  
+    {  
+        if (auth()->user()->hasRole('Admin')) {
+            $transaksi = Checkout::where('status', 'success')->get();
+        } else if (auth()->user()->hasRole('Pengurus')) {
+            $ukms = auth()->user()->ukms();
+            $events = Event::whereIn('ukm_id', $ukms->pluck('id'))->pluck('id');
+            $transaksi = Checkout::whereHas('tiket', function($query) use ($events) {  
+                $query->whereIn('event_id', $events);  
+            })->where('status', 'success')->get(); 
+        }
+    
+        return Excel::download(new TransaksiExport($transaksi), 'transaksis.xlsx');
+    }  
 }
