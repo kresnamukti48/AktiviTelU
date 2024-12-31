@@ -129,12 +129,7 @@
                         </div>
 
                         <br>
-                        <h5 class="mb-3">Detail Proker</h5>
-                        <div class="">
-                            <div class="d-flex align-items-center mt-2">
-                                <p class="small">Lorem Ipsum dolor sit amet</p>
-                            </div>
-                        </div>
+
 
                     </div>
                 </div>

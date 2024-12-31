@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ukm;  
 use Illuminate\Http\Request;
 use App\Exports\UkmExport;
+use App\Models\Member;
 use Maatwebsite\Excel\Facades\Excel; 
 
 class UkmController extends Controller  
@@ -24,6 +25,13 @@ class UkmController extends Controller
         $ukms = UKM::where('kategori_ukm', $kategori)->get(); // Pastikan kolom kategori sesuai  
         return view('user.ukmlist', compact('ukms', 'kategori'));  
     }  
+
+    //get by id user yang sedang login
+    public function showByUser()  
+    {  
+        $ukms = auth()->user()->ukm;
+        return view('user.myukm', compact('ukms'));  
+    }
 
     public function search(Request $request)  
     {  

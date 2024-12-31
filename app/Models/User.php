@@ -63,4 +63,22 @@ class User extends Authenticatable
         // Gabungkan kedua koleksi  
         return $memberUkms->merge($dosenUkms)->unique('id'); // Menghindari duplikasi  
     }
+
+    public function ukm()  
+    {  
+        return $this->hasManyThrough(  
+            Ukm::class,   
+            Member::class,   
+            'user_id',    // Foreign key di tabel member  
+            'id',         // Foreign key di tabel ukms  
+            'id',         // Local key di tabel users  
+            'ukm_id'      // Local key di tabel member  
+        )->distinct(); // Hindari duplikasi  
+    }  
+
+    public function checkouts()  
+    {  
+        return $this->hasMany(Checkout::class, 'user_id');
+    }  
+
 }

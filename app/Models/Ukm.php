@@ -24,4 +24,16 @@ class Ukm extends Model
     {  
         return $this->hasMany(Dosen::class, 'ukm_id'); // 1 UKM memiliki banyak dosen  
     }  
+
+    public function users()  
+    {  
+        return $this->hasManyThrough(  
+            User::class,   
+            Member::class,   
+            'ukm_id',   // Foreign key di tabel member  
+            'id',       // Foreign key di tabel users  
+            'id',       // Local key di tabel ukms  
+            'user_id'   // Local key di tabel member  
+        );  
+    }  
 }
