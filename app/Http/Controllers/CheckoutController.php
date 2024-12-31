@@ -32,14 +32,6 @@ class CheckoutController extends Controller
 
     }
     
-    //showbyuser
-    public function showByUser()  
-    {  
-        $checkouts = auth()->user()->checkouts()  
-        ->where('status', 'success') 
-        ->get();
-        return view('user.myticket', compact('checkouts'));  
-    }
 
     
     public function processCheckout(Request $request)  

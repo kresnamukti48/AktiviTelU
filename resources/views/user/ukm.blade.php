@@ -69,7 +69,6 @@
                                 </span>
                             </li>
 
-
                             <li class="list-inline-item">
                                 <span class="d-flex align-items-center">
                                     <i class="mdi mdi-content-paste fs-4 me-2 text-primary"></i>
@@ -95,20 +94,20 @@
                         <h5 class="mb-3">Pengurus:</h5>
 
                         <div class="">
-                            <div class="d-flex align-items-center justify-content-between mt-2">  
-                                <span class="small text-muted">Dosen Pembina:</span>  
-                                <span class="small">{{ $dosen->user->name ?? 'Tidak ada' }}</span> <!-- Ambil nama dosen -->  
-                            </div>  
+                            <div class="d-flex align-items-center justify-content-between mt-2">
+                                <span class="small text-muted">Dosen Pembina:</span>
+                                <span class="small">{{ $dosen->user->name ?? 'Tidak ada' }}</span>
+                            </div>
 
-                            <div class="d-flex align-items-center justify-content-between mt-2">  
-                                <span class="small text-muted">Ketua:</span>  
-                                <span class="small">{{ $ketua->user->name ?? 'Tidak ada' }}</span> <!-- Ambil nama ketua -->  
-                            </div>  
+                            <div class="d-flex align-items-center justify-content-between mt-2">
+                                <span class="small text-muted">Ketua:</span>
+                                <span class="small">{{ $ketua->user->name ?? 'Tidak ada' }}</span>
+                            </div>
 
-                            <div class="d-flex align-items-center justify-content-between mt-2">  
-                                <span class="small text-muted">Wakil Ketua:</span>  
-                                <span class="small">{{ $wakilKetua->user->name ?? 'Tidak ada' }}</span> <!-- Ambil nama wakil ketua -->  
-                            </div>  
+                            <div class="d-flex align-items-center justify-content-between mt-2">
+                                <span class="small text-muted">Wakil Ketua:</span>
+                                <span class="small">{{ $wakilKetua->user->name ?? 'Tidak ada' }}</span>
+                            </div>
                         </div>
 
                         <div class="d-flex mt-3">
@@ -122,464 +121,71 @@
                                 ])
                                 data-bs-toggle="modal"
                                 data-bs-target="#joinUkmModal"
+                                data-ukm-id="{{ $ukm->id }}"
+                                data-action="{{ route('home.ukm.join', ['ukm' => $ukm->id]) }}"
                                 @disabled($hasJoinedUkm)
                             >
-                                Masuk<br>UKM
+                                Masuk UKM
                             </a>
                         </div>
-
-                        <br>
-
-
                     </div>
                 </div>
             </div><!--end row-->
         </div><!--end container-->
 
-        <div class="container mt-100 mt-60">
-            <div class="row justify-content-center">
-                <div class="col">
-                    <div class="section-title text-center mb-4 pb-2">
-                        <h4 class="title mb-3">UKM Lainnya</h4>
-                        <p class="text-muted para-desc mb-0 mx-auto">Cek UKM lainnya yang mungkin menarik untukmu</p>
-                    </div>
-                </div><!--end col-->
-            </div><!--end row-->
+        <!-- Global Modal -->
+        <div class="modal fade" id="joinUkmModal" tabindex="-1" aria-labelledby="joinUkmModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="joinUkmForm" method="post">
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title">Join UKM</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
 
-            <div class="row g-4 mt-0">
-                @foreach ($ukms as $ukm)
-                    <div class="col-lg-6 col-12">
-                        <div class="card property property-list border-0 shadow position-relative overflow-hidden rounded-3">
-                            <div class="d-md-flex">
-                                <div class="property-image position-relative overflow-hidden shadow flex-md-shrink-0 rounded-3 m-2">
-                                    <img src="{{ asset($ukm->logo_ukm) }}" class="img-fluid h-100 w-100" alt="">
-                                    <!-- <ul class="list-unstyled property-icon">
-                                        <li class=""><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="home" class="icons"></i></a></li>
-                                        <li class="mt-1"><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="heart" class="icons"></i></a></li>
-                                        <li class="mt-1"><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="camera" class="icons"></i></a></li>
-                                    </ul> -->
-                                </div>
-                                <div class="card-body content p-3">
-                                    <a href="UKM-detail.blade.php" class="title fs-5 text-dark fw-medium">
-                                        {{ $ukm->nama_ukm }}
-                                    </a>
-
-                                    <ul class="list-unstyled mt-3 py-3 border-top border-bottom d-flex align-items-center justify-content-between">
-                                        <li class="d-flex align-items-center me-3">
-                                            <i class="mdi mdi-account-check fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted fs-6">{{ $ukm->members_count }} Orang</span>
-                                        </li>
-
-                                        <li class="d-flex align-items-center">
-                                            <i class="mdi mdi-content-paste fs-5 me-2 text-primary"></i>
-                                        <span class="text-muted fs-6">{{ $ukm->kegiatan_count }} Proker</span>
-                                        </li>
-                                    </ul>
-                                    <a href="{{ route('welcome.ukm', ['ukm' => $ukm->id]) }}" class="btn btn-primary w-100">Detail UKM</a>
-                                </div>
+                        <div class="modal-body">
+                            <p id="ukmIdText"></p>
+                            <div class="mb-3">
+                                <label for="nim" class="form-label">NIM</label>
+                                <input type="text" class="form-control" id="nim" name="nim" required>
                             </div>
-                        </div><!--end items-->
-                    </div><!--end col-->
-                @endforeach
 
-                <!-- <div class="col-12 mt-4 pt-2">
-                    <div class="text-center">
-                        <a href="list.blade.php" class="mt-3 fs-6 text-primary">View More UKM <i class="mdi mdi-arrow-right align-middle"></i></a>
-                    </div>
-                </div> -->
-            </div><!--end row-->
+                            <div class="mb-3">
+                                <label for="jurusan" class="form-label">Jurusan</label>
+                                <input type="text" class="form-control" id="jurusan" name="jurusan" required>
+                            </div>
 
-            
-            <!-- <div class="row">
-                <div class="col-12">
-                    <div class="tiny-slide-three">
-                        <div class="tiny-slide">
-                            <div class="card property border-0 shadow position-relative overflow-hidden rounded-3 m-3">
-                                <div class="property-image position-relative overflow-hidden shadow">
-                                    <img src="{{ asset('layout-member/images/property/1.jpg') }}" class="img-fluid" alt="">
-                                    <ul class="list-unstyled property-icon">
-                                        <li class=""><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="home" class="icons"></i></a></li>
-                                        <li class="mt-1"><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="heart" class="icons"></i></a></li>
-                                        <li class="mt-1"><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="camera" class="icons"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="card-body content p-4">
-                                    <a href="property-detail.blade.php" class="title fs-5 text-dark fw-medium">{{ $ukm->nama_ukm }}</a>
+                            <div class="mb-3">
+                                <label for="angkatan" class="form-label">Angkatan</label>
+                                <input type="number" class="form-control" id="angkatan" name="angkatan" required>
+                            </div>
+                        </div>
 
-                                    <ul class="list-unstyled mt-3 py-3 border-top border-bottom d-flex align-items-center justify-content-between">
-                                        <li class="d-flex align-items-center me-3">
-                                            <i class="mdi mdi-arrow-expand-all fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">8000sqf</span>
-                                        </li>
-
-                                        <li class="d-flex align-items-center me-3">
-                                            <i class="mdi mdi-bed fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">4 Beds</span>
-                                        </li>
-
-                                        <li class="d-flex align-items-center">
-                                            <i class="mdi mdi-shower fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">4 Baths</span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-between mt-2 mb-0">
-                                        <li class="list-inline-item mb-0">
-                                            <span class="text-muted">Price</span>
-                                            <p class="fw-medium mb-0">$5000</p>
-                                        </li>
-                                        <li class="list-inline-item mb-0 text-muted">
-                                            <span class="text-muted">Rating</span>
-                                            <ul class="fw-medium text-warning list-unstyled mb-0">
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0 text-dark">5.0(30)</li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div> -->
-                            <!-- </div>end items -->
-                        <!-- </div>end col -->
-
-                        <!-- <div class="tiny-slide">
-                            <div class="card property border-0 shadow position-relative overflow-hidden rounded-3 m-3">
-                                <div class="property-image position-relative overflow-hidden shadow">
-                                    <img src="{{ asset('layout-member/images/property/2.jpg') }}" class="img-fluid" alt="">
-                                    <ul class="list-unstyled property-icon">
-                                        <li class=""><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="home" class="icons"></i></a></li>
-                                        <li class="mt-1"><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="heart" class="icons"></i></a></li>
-                                        <li class="mt-1"><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="camera" class="icons"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="card-body content p-4">
-                                    <a href="property-detail.blade.php" class="title fs-5 text-dark fw-medium">59345 STONEWALL DR, Plaquemine, LA 70764, USA</a>
-                                    <ul class="list-unstyled mt-3 py-3 border-top border-bottom d-flex align-items-center justify-content-between">
-                                        <li class="d-flex align-items-center me-3">
-                                            <i class="mdi mdi-arrow-expand-all fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">8000sqf</span>
-                                        </li>
-
-                                        <li class="d-flex align-items-center me-3">
-                                            <i class="mdi mdi-bed fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">4 Beds</span>
-                                        </li>
-
-                                        <li class="d-flex align-items-center">
-                                            <i class="mdi mdi-shower fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">4 Baths</span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-between mt-2 mb-0">
-                                        <li class="list-inline-item mb-0">
-                                            <span class="text-muted">Price</span>
-                                            <p class="fw-medium mb-0">$5000</p>
-                                        </li>
-                                        <li class="list-inline-item mb-0 text-muted">
-                                            <span class="text-muted">Rating</span>
-                                            <ul class="fw-medium text-warning list-unstyled mb-0">
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0 text-dark">5.0(30)</li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div> -->
-                            <!-- </div>end items -->
-                        <!-- </div>end col -->
-
-                        <!-- <div class="tiny-slide">
-                            <div class="card property border-0 shadow position-relative overflow-hidden rounded-3 m-3">
-                                <div class="property-image position-relative overflow-hidden shadow">
-                                    <img src="{{ asset('layout-member/images/property/3.jpg') }}" class="img-fluid" alt="">
-                                    <ul class="list-unstyled property-icon">
-                                        <li class=""><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="home" class="icons"></i></a></li>
-                                        <li class="mt-1"><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="heart" class="icons"></i></a></li>
-                                        <li class="mt-1"><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="camera" class="icons"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="card-body content p-4">
-                                    <a href="property-detail.blade.php" class="title fs-5 text-dark fw-medium">3723 SANDBAR DR, Addis, LA 70710, USA</a>
-                                    <ul class="list-unstyled mt-3 py-3 border-top border-bottom d-flex align-items-center justify-content-between">
-                                        <li class="d-flex align-items-center me-3">
-                                            <i class="mdi mdi-arrow-expand-all fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">8000sqf</span>
-                                        </li>
-
-                                        <li class="d-flex align-items-center me-3">
-                                            <i class="mdi mdi-bed fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">4 Beds</span>
-                                        </li>
-
-                                        <li class="d-flex align-items-center">
-                                            <i class="mdi mdi-shower fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">4 Baths</span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-between mt-2 mb-0">
-                                        <li class="list-inline-item mb-0">
-                                            <span class="text-muted">Price</span>
-                                            <p class="fw-medium mb-0">$5000</p>
-                                        </li>
-                                        <li class="list-inline-item mb-0 text-muted">
-                                            <span class="text-muted">Rating</span>
-                                            <ul class="fw-medium text-warning list-unstyled mb-0">
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0 text-dark">5.0(30)</li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div> -->
-                            <!-- </div>end items -->
-                        <!-- </div>end col
-
-                        <div class="tiny-slide">
-                            <div class="card property border-0 shadow position-relative overflow-hidden rounded-3 m-3">
-                                <div class="property-image position-relative overflow-hidden shadow">
-                                    <img src="{{ asset('layout-member/images/property/4.jpg') }}" class="img-fluid" alt="">
-                                    <ul class="list-unstyled property-icon">
-                                        <li class=""><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="home" class="icons"></i></a></li>
-                                        <li class="mt-1"><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="heart" class="icons"></i></a></li>
-                                        <li class="mt-1"><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="camera" class="icons"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="card-body content p-4">
-                                    <a href="property-detail.blade.php" class="title fs-5 text-dark fw-medium">Lot 21 ROYAL OAK DR, Prairieville, LA 70769, USA</a>
-                                    <ul class="list-unstyled mt-3 py-3 border-top border-bottom d-flex align-items-center justify-content-between">
-                                        <li class="d-flex align-items-center me-3">
-                                            <i class="mdi mdi-arrow-expand-all fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">8000sqf</span>
-                                        </li>
-
-                                        <li class="d-flex align-items-center me-3">
-                                            <i class="mdi mdi-bed fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">4 Beds</span>
-                                        </li>
-
-                                        <li class="d-flex align-items-center">
-                                            <i class="mdi mdi-shower fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">4 Baths</span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-between mt-2 mb-0">
-                                        <li class="list-inline-item mb-0">
-                                            <span class="text-muted">Price</span>
-                                            <p class="fw-medium mb-0">$5000</p>
-                                        </li>
-                                        <li class="list-inline-item mb-0 text-muted">
-                                            <span class="text-muted">Rating</span>
-                                            <ul class="fw-medium text-warning list-unstyled mb-0">
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0 text-dark">5.0(30)</li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div><!--end items-->
-                        <!-- </div>end col -->
-<!-- 
-                        <div class="tiny-slide">
-                            <div class="card property border-0 shadow position-relative overflow-hidden rounded-3 m-3">
-                                <div class="property-image position-relative overflow-hidden shadow">
-                                    <img src="{{ asset('layout-member/images/property/5.jpg') }}" class="img-fluid" alt="">
-                                    <ul class="list-unstyled property-icon">
-                                        <li class=""><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="home" class="icons"></i></a></li>
-                                        <li class="mt-1"><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="heart" class="icons"></i></a></li>
-                                        <li class="mt-1"><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="camera" class="icons"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="card-body content p-4">
-                                    <a href="property-detail.blade.php" class="title fs-5 text-dark fw-medium">710 BOYD DR, Unit #1102, Baton Rouge, LA 70808, USA</a>
-                                    <ul class="list-unstyled mt-3 py-3 border-top border-bottom d-flex align-items-center justify-content-between">
-                                        <li class="d-flex align-items-center me-3">
-                                            <i class="mdi mdi-arrow-expand-all fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">8000sqf</span>
-                                        </li>
-
-                                        <li class="d-flex align-items-center me-3">
-                                            <i class="mdi mdi-bed fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">4 Beds</span>
-                                        </li>
-
-                                        <li class="d-flex align-items-center">
-                                            <i class="mdi mdi-shower fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">4 Baths</span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-between mt-2 mb-0">
-                                        <li class="list-inline-item mb-0">
-                                            <span class="text-muted">Price</span>
-                                            <p class="fw-medium mb-0">$5000</p>
-                                        </li>
-                                        <li class="list-inline-item mb-0 text-muted">
-                                            <span class="text-muted">Rating</span>
-                                            <ul class="fw-medium text-warning list-unstyled mb-0">
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0 text-dark">5.0(30)</li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div><!--end items-->
-                        <!-- </div>end col -->
-
-                        <!-- <div class="tiny-slide">
-                            <div class="card property border-0 shadow position-relative overflow-hidden rounded-3 m-3">
-                                <div class="property-image position-relative overflow-hidden shadow">
-                                    <img src="{{ asset('layout-member/images/property/6.jpg') }}" class="img-fluid" alt="">
-                                    <ul class="list-unstyled property-icon">
-                                        <li class=""><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="home" class="icons"></i></a></li>
-                                        <li class="mt-1"><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="heart" class="icons"></i></a></li>
-                                        <li class="mt-1"><a href="javascript:void(0)" class="btn btn-sm btn-icon btn-pills btn-primary"><i data-feather="camera" class="icons"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="card-body content p-4">
-                                    <a href="property-detail.blade.php" class="title fs-5 text-dark fw-medium">5133 MCLAIN WAY, Baton Rouge, LA 70809, USA</a>
-                                    <ul class="list-unstyled mt-3 py-3 border-top border-bottom d-flex align-items-center justify-content-between">
-                                        <li class="d-flex align-items-center me-3">
-                                            <i class="mdi mdi-arrow-expand-all fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">8000sqf</span>
-                                        </li>
-
-                                        <li class="d-flex align-items-center me-3">
-                                            <i class="mdi mdi-bed fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">4 Beds</span>
-                                        </li>
-
-                                        <li class="d-flex align-items-center">
-                                            <i class="mdi mdi-shower fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted">4 Baths</span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-between mt-2 mb-0">
-                                        <li class="list-inline-item mb-0">
-                                            <span class="text-muted">Price</span>
-                                            <p class="fw-medium mb-0">$5000</p>
-                                        </li>
-                                        <li class="list-inline-item mb-0 text-muted">
-                                            <span class="text-muted">Rating</span>
-                                            <ul class="fw-medium text-warning list-unstyled mb-0">
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item mb-0 text-dark">5.0(30)</li>
-                                            </ul>
-                                        </li>
-                                    </ul> 
-                                </div> -->
-                            </div><!--end items-->
-                        </div><!--end col-->
-                    </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary">Join</button>
+                        </div>
+                    </form>
                 </div>
-            </div><!--end row-->
-        </div><!--end container-->
-    </section><!--end section-->
-    <!-- End -->
-
-    <div class="modal fade" id="joinUkmModal" tabindex="-1" aria-labelledby="joinUkmModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="{{ route('home.ukm.join', ['ukm' => $ukm->id]) }}" method="post">
-                    @csrf
-                    <div class="modal-header">
-                        <h5 class="modal-title">Join UKM</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="nim" class="form-label">
-                                NIM
-                            </label>
-
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="nim"
-                                name="nim"
-                                value="{{ old('nim') }}"
-                                required
-                            />
-
-                            @error('nim')
-                                <p class="text-danger text-sm">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="jurusan" class="form-label">
-                                Jurusan
-                            </label>
-
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="jurusan"
-                                name="jurusan"
-                                value="{{ old('jurusan') }}"
-                                required
-                            />
-
-                            @error('jurusan')
-                                <p class="text-danger text-sm">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="angkatan" class="form-label">
-                                Angkatan
-                            </label>
-
-                            <input
-                                type="number"
-                                class="form-control"
-                                id="angkatan"
-                                name="angkatan"
-                                value="{{ old('angkatan') }}"
-                                required
-                            />
-
-                            @error('angkatan')
-                                <p class="text-danger text-sm">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Tutup
-                        </button>
-
-                        <button type="submit" class="btn btn-primary">
-                            Join
-                        </button>
-                    </div>
-                </form>
             </div>
         </div>
-    </div>
+    </section><!--end section-->
+
+@endsection
+
+@section('scripts')
+    <script>
+        document.querySelectorAll('[data-bs-target="#joinUkmModal"]').forEach(button => {
+            button.addEventListener('click', function () {
+                const ukmId = this.dataset.ukmId;
+                const formAction = this.dataset.action;
+
+                const form = document.getElementById('joinUkmForm');
+                form.action = formAction;
+
+                document.getElementById('ukmIdText').innerText = `UKM ID: ${ukmId}`;
+            });
+        });
+    </script>
 @endsection
