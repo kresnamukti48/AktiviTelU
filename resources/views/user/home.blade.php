@@ -41,8 +41,7 @@
                         <div class="row row-cols-lg-5 row-cols-md-3 row-cols-sm-2 row-cols-1 g-4 mt-0">
                             <div class="col">
                                 <div class="categories position-relative overflow-hidden rounded-3 shadow">
-                                    <img src="{{ asset('layout-member/images/property/residential.jpg') }}" class="img-fluid" alt="">
-
+                                    <img src="{{ asset('layout-member/images/property/UKM Sosial.jpg') }}" class="img-fluid" alt="">
                                     <div class="p-3">
                                         <a href="list.blade.php" class="title text-dark fs-5 fw-medium">UKM Sosial</a>
                                         <p class="text-muted small mb-0">6 UKM</p>
@@ -52,7 +51,7 @@
 
                             <div class="col">
                                 <div class="categories position-relative overflow-hidden rounded-3 shadow">
-                                    <img src="{{ asset('layout-member/images/property/land.jpg') }}" class="img-fluid" alt="">
+                                    <img src="{{ asset('layout-member/images/property/UKM Kesenian.jpg') }}" class="img-fluid" alt="">
 
                                     <div class="p-3">
                                         <a href="list.blade.php" class="title text-dark fs-5 fw-medium">UKM Kesenian</a>
@@ -63,7 +62,7 @@
 
                             <div class="col">
                                 <div class="categories position-relative overflow-hidden rounded-3 shadow">
-                                    <img src="{{ asset('layout-member/images/property/commercial.jpg') }}" class="img-fluid" alt="">
+                                    <img src="{{ asset('layout-member/images/property/UKM Penalaran.jpg') }}" class="img-fluid" alt="">
 
                                     <div class="p-3">
                                         <a href="list.blade.php" class="title text-dark fs-5 fw-medium">UKM Penalaran</a>
@@ -74,7 +73,7 @@
 
                             <div class="col">
                                 <div class="categories position-relative overflow-hidden rounded-3 shadow">
-                                    <img src="{{ asset('layout-member/images/property/industrial.jpg') }}" class="img-fluid" alt="">
+                                    <img src="{{ asset('layout-member/images/property/UKM Olahraga.jpg') }}" class="img-fluid" alt="">
 
                                     <div class="p-3">
                                         <a href="list.blade.php" class="title text-dark fs-5 fw-medium">UKM Olahraga</a>
@@ -85,7 +84,7 @@
 
                             <div class="col">
                                 <div class="categories position-relative overflow-hidden rounded-3 shadow">
-                                    <img src="{{ asset('layout-member/images/property/investment.jpg') }}" class="img-fluid" alt="">
+                                    <img src="{{ asset('layout-member/images/property/UKM Kerohanian.jpg') }}" class="img-fluid" alt="">
 
                                     <div class="p-3">
                                         <a href="list.blade.php" class="title text-dark fs-5 fw-medium">UKM Kerohanian</a>
@@ -215,7 +214,7 @@
                         <div class="col py-4">
                             <div class="counter-box text-center">
                                 <h1 class="mb-0 text-white fw-bold"><span class="counter-value" data-target="33">1</span>+</h1>
-                                <h6 class="counter-head text-white fs-5 fw-semibold mb-0">PKegiatan</h6>
+                                <h6 class="counter-head text-white fs-5 fw-semibold mb-0">Kegiatan</h6>
                             </div>
                         </div>
 

@@ -1,8 +1,14 @@
 @extends('layouts.member')  
 
 @section('content')  
-<section class="section">  
+<section class="position-relative mt-5 pt-4">
+   
     <div class="container">  
+
+        <h1 class="h3 mb-4 text-gray-800">  
+            {{ __('Tiket') }}  
+        </h1>  
+
         @if (session()->has('success'))  
             <div class="alert alert-success">  
                 {{ session('success.message') }}  
@@ -51,14 +57,7 @@
                                     <span class="text-muted fs-6">Rp30.000</span>  
                                 </li>  
 
-                                <button  
-                                    type="button"  
-                                    @class([  
-                                        "btn btn-primary mt-3",    
-                                    ])  
-                                    data-bs-toggle="modal"  
-                                    data-bs-target="#modalEvent{{ $event->id }}"    
-                                >  
+                                <button type="button" @class(["btn btn-primary mt-3",]) data-bs-toggle="modal" data-bs-target="#modalEvent{{ $event->id }}">  
                                     Beli Tiket  
                                 </button>  
 
@@ -98,6 +97,8 @@
                                         </form>  
                                     </div>  
                                 </div>  
+                            
+                            
                             </div>  
                         </div>  
                     </div>  

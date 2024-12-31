@@ -70,13 +70,6 @@
                             </li>
 
                             <li class="list-inline-item">
-                                <span class="d-flex align-items-center me-4">
-                                    <i class="mdi mdi-account-multiple fs-4 me-2 text-primary"></i>
-                                    <span class="text-muted fs-5">{{ fake()->randomNumber(1) }} Divisi</span>
-                                </span>
-                            </li>
-
-                            <li class="list-inline-item">
                                 <span class="d-flex align-items-center">
                                     <i class="mdi mdi-content-paste fs-4 me-2 text-primary"></i>
                                     <span class="text-muted fs-5">{{ fake()->randomNumber(1) }} Proker</span>

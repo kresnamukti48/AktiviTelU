@@ -1,8 +1,8 @@
-@extends('layouts.app')  
+@extends('layouts.member')
 
 @section('content')
 
-
+<section class="position-relative mt-5 pt-4">
 <div class="container">  
     @if (session('error'))  
         <div class="alert alert-danger">  
@@ -21,5 +21,6 @@
 
         <button type="submit" class="btn btn-primary">Checkout</button>  
     </form>  
+</div>  
 </div>  
 @endsection

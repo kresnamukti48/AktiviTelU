@@ -23,9 +23,7 @@
 	<body>
         <!-- Navbar STart -->
         <header id="topnav" class="defaultscroll sticky">
-            <div class="container">
-
-                
+            <!-- <div class="container">                 -->
                 <div class="menu-extras">
                     <div class="menu-item">
                         <a class="navbar-toggle" id="isToggle" onclick="toggleMenu()">
@@ -45,6 +43,7 @@
                             <button type="button" class="dropdown-toggle btn btn-sm btn-icon btn-pills btn-primary" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i data-feather="search" class="icons"></i>
                             </button>
+
                             <div class="dropdown-menu dd-menu dropdown-menu-end bg-white rounded-3 border-0 mt-3 p-0" style="width: 240px;">
                                 <div class="search-bar">
                                     <div id="itemSearch" class="menu-search mb-0">
@@ -57,9 +56,15 @@
                             </div>
                         </div>
                     </li>
-                    <li class="list-inline-item ps-1 mb-0">
-                        <a href="{{ route('logout') }}" class="btn ">Logout  <i data-feather="user" class="icons"></i></a>
+
+                    <li class="list-inline-item">
+                        <a href="{{ route('home.biodata') }}" class="btn ">Tiket  <i data-feather="user" class="icons"></i></a>
                     </li>
+
+                    <li class="list-inline-item">
+                        <a href="{{ route('logout') }}" class="btn ">Logout</a>
+                    </li>
+
                 </ul>
                 
                 <!-- <div id="navigation"> -->
@@ -83,9 +88,9 @@
                             </ul>
                         </li>
                         
-                        <li><a href="{{ route('home.event') }}" class="sub-menu-item">Event</a></li>
-                        
-                        <li><a href="{{ route('home.event') }}" class="sub-menu-item">List</a></li>
+                        <li class="list-inline-item">
+                            <a href="{{ route('home.event') }}" class="btn ">Event</a>
+                        </li>
 
                         <!-- <li class="has-submenu parent-parent-menu-item">
                             <a href="javascript:void(0)">Pages</a><span class="menu-arrow"></span>

@@ -10,6 +10,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TicketController; 
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\BiodataController;
 
 /*  
 |--------------------------------------------------------------------------  
@@ -34,6 +35,12 @@ Route::get('/home/event', 'HomeController@event')->name('home.event');
 Route::post('/home/event/{event}', 'HomeController@joinEvent')->name('home.event.join');
 
 Route::get('/logout', 'LogoutController@logout')->name('logout');
+
+Route::get('/home/biodata', 'BiodataController@index')->name('home.biodata');
+Route::get('/home/biodata', 'BiodataController@show')->name('home.biodata');
+Route::get('/home/biodata', 'BiodataController@ticket')->name('home.biodata');
+Route::get('/ticket', [BiodataController::class, 'ticket'])->name('ticket');
+
 
 Route::middleware('auth')->group(function() {  
     Route::resource('basic', BasicController::class);  
