@@ -104,14 +104,21 @@ class HomeController extends Controller
 
     public function join(Request $request, Ukm $ukm)
     {
+
+        $user = Auth::user();
+
         $data = $request->validate([
             'nim' => 'required|string',
             'jurusan' => 'required|string',
             'angkatan' => 'required|numeric',
         ]);
 
+        if (Member::where('user_id', $user->id)->where('ukm_id', $ukm->id)->exists()) {
+            return redirect()->back()->with('error', 'User sudah terdaftar di UKM ini');
+        }
+
         try {
-            $data['user_id'] = Auth::id();
+            $data['user_id'] = $user->id;
             $data['ukm_id'] = $ukm->id;
             $data['role_member'] = 'anggota';
 

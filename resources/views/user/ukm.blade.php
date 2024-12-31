@@ -53,6 +53,12 @@
                     {{ session('error.message') }}
                 </div>
             @endif
+            
+            @if (session('error'))  
+            <div class="alert alert-danger">  
+                {{ session('error') }}  
+            </div>  
+            @endif  
 
             <div class="row g-4">
                 <div class="col-lg-8 col-md-7 col-12">
