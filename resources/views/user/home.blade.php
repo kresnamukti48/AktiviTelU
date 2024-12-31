@@ -41,9 +41,10 @@
                     <div class="features-absolute">
                         <div class="row row-cols-lg-5 row-cols-md-3 row-cols-sm-2 row-cols-1 g-4 mt-0">
 
+
                             <div class="col">  
                                 <div class="categories position-relative overflow-hidden rounded-3 shadow">  
-                                    <img src="{{ asset('layout-member/images/property/residential.jpg') }}" class="img-fluid" alt="">  
+                                    <img src="{{ asset('layout-member/images/property/UKM Sosial.jpg') }}" class="img-fluid" alt="">
                                     <div class="p-3">  
                                         <a href="{{ route('ukm.listByCategory', ['kategori' => 'sosial']) }}" class="title text-dark fs-5 fw-medium">UKM Sosial</a>  
                                         <p class="text-muted small mb-0">{{ $ukmCounts['sosial'] }} UKM</p>  
@@ -52,9 +53,10 @@
                             </div>
 
 
+
                             <div class="col">  
                                 <div class="categories position-relative overflow-hidden rounded-3 shadow">  
-                                    <img src="{{ asset('layout-member/images/property/residential.jpg') }}" class="img-fluid" alt="">  
+                                    <img src="{{ asset('layout-member/images/property/UKM Kesenian.jpg') }}" class="img-fluid" alt="">
                                     <div class="p-3">  
                                         <a href="{{ route('ukm.listByCategory', ['kategori' => 'kesenian']) }}" class="title text-dark fs-5 fw-medium">UKM Kesenian</a>  
                                         <p class="text-muted small mb-0">{{ $ukmCounts['kesenian'] }} UKM</p>  
@@ -62,9 +64,10 @@
                                 </div>  
                             </div>
 
+
                             <div class="col">  
                                 <div class="categories position-relative overflow-hidden rounded-3 shadow">  
-                                    <img src="{{ asset('layout-member/images/property/residential.jpg') }}" class="img-fluid" alt="">  
+                                    <img src="{{ asset('layout-member/images/property/UKM Penalaran.jpg') }}" class="img-fluid" alt=""> 
                                     <div class="p-3">  
                                         <a href="{{ route('ukm.listByCategory', ['kategori' => 'penalaran']) }}" class="title text-dark fs-5 fw-medium">UKM Penalaran</a>  
                                         <p class="text-muted small mb-0">{{ $ukmCounts['penalaran'] }} UKM</p>  
@@ -75,7 +78,7 @@
 
                             <div class="col">  
                                 <div class="categories position-relative overflow-hidden rounded-3 shadow">  
-                                    <img src="{{ asset('layout-member/images/property/residential.jpg') }}" class="img-fluid" alt="">  
+                                    <img src="{{ asset('layout-member/images/property/UKM Olahraga.jpg') }}" class="img-fluid" alt="">  
                                     <div class="p-3">  
                                         <a href="{{ route('ukm.listByCategory', ['kategori' => 'olahraga']) }}" class="title text-dark fs-5 fw-medium">UKM Olahraga</a>  
                                         <p class="text-muted small mb-0">{{ $ukmCounts['olahraga'] }} UKM</p>  
@@ -84,9 +87,10 @@
                             </div>
 
 
+
                             <div class="col">  
                                 <div class="categories position-relative overflow-hidden rounded-3 shadow">  
-                                    <img src="{{ asset('layout-member/images/property/residential.jpg') }}" class="img-fluid" alt="">  
+                                    <img src="{{ asset('layout-member/images/property/UKM Kerohanian.jpg') }}" class="img-fluid" alt=""> 
                                     <div class="p-3">  
                                         <a href="{{ route('ukm.listByCategory', ['kategori' => 'kerohanian']) }}" class="title text-dark fs-5 fw-medium">UKM Kerohanian</a>  
                                         <p class="text-muted small mb-0">{{ $ukmCounts['kerohanian'] }} UKM</p>  
@@ -199,33 +203,35 @@
                 <div class="bg-overlay"></div>
                 <div class="container">
                     <div class="row">
-                    <div class="col py-4">  
-    <div class="counter-box text-center">  
-        <h1 class="mb-0 text-white fw-bold"><span class="counter-value" data-target="{{ $ukmcount }}">{{ $ukmcount }}</span></h1>  
-        <h6 class="counter-head text-white fs-5 fw-semibold mb-0">UKM</h6>  
-    </div><!--end counter box-->  
-</div><!--end col-->  
 
-<div class="col py-4">  
-    <div class="counter-box text-center">  
-        <h1 class="mb-0 text-white fw-bold"><span class="counter-value" data-target="5">5</span></h1>  
-        <h6 class="counter-head text-white fs-5 fw-semibold mb-0">Kategori</h6>  
-    </div><!--end counter box-->  
-</div><!--end col-->  
+                      <div class="col py-4">  
+                          <div class="counter-box text-center">  
+                              <h1 class="mb-0 text-white fw-bold"><span class="counter-value" data-target="{{ $ukmcount }}">{{ $ukmcount }}</span></h1>  
+                              <h6 class="counter-head text-white fs-5 fw-semibold mb-0">UKM</h6>  
+                          </div><!--end counter box-->  
+                      </div><!--end col-->  
 
-<div class="col py-4">  
-    <div class="counter-box text-center">  
-        <h1 class="mb-0 text-white fw-bold"><span class="counter-value" data-target="{{ $kegiatan }}">{{ $kegiatan }}</span></h1>  
-        <h6 class="counter-head text-white fs-5 fw-semibold mb-0">Kegiatan</h6>  
-    </div>  
-</div>  
+                      <div class="col py-4">  
+                          <div class="counter-box text-center">  
+                              <h1 class="mb-0 text-white fw-bold"><span class="counter-value" data-target="5">5</span></h1>  
+                              <h6 class="counter-head text-white fs-5 fw-semibold mb-0">Kategori</h6>  
+                          </div><!--end counter box-->  
+                      </div><!--end col-->  
 
-<div class="col py-4">  
-    <div class="counter-box text-center">  
-        <h1 class="mb-0 text-white fw-bold"><span class="counter-value" data-target="{{ $event }}">{{ $event }}</span></h1>  
-        <h6 class="counter-head text-white fs-5 fw-semibold mb-0">Event</h6>  
-    </div>  
-</div>
+                      <div class="col py-4">  
+                          <div class="counter-box text-center">  
+                              <h1 class="mb-0 text-white fw-bold"><span class="counter-value" data-target="{{ $kegiatan }}">{{ $kegiatan }}</span></h1>  
+                              <h6 class="counter-head text-white fs-5 fw-semibold mb-0">Kegiatan</h6>  
+                          </div>  
+                      </div>  
+
+                      <div class="col py-4">  
+                          <div class="counter-box text-center">  
+                              <h1 class="mb-0 text-white fw-bold"><span class="counter-value" data-target="{{ $event }}">{{ $event }}</span></h1>  
+                              <h6 class="counter-head text-white fs-5 fw-semibold mb-0">Event</h6>  
+                          </div>  
+                      </div>
+                      
                     </div><!--end row-->
                 </div><!--end container-->
             </div>

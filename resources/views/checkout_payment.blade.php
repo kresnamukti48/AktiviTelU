@@ -1,6 +1,8 @@
-@extends('layouts.app')  
+@extends('layouts.member')
 
-@section('content')  
+@section('content')
+
+<section class="position-relative mt-5 pt-4">
 <div class="container">  
     <h1>Konfirmasi Pembayaran</h1>  
     <button id="pay-button" class="btn btn-success">Bayar Sekarang</button>  
@@ -34,5 +36,6 @@
             }  
         });
     </script>  
+</div>  
 </div>  
 @endsection

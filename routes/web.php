@@ -10,7 +10,9 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TicketController; 
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\BasicController;
+
 
 /*  
 |--------------------------------------------------------------------------  
@@ -39,6 +41,12 @@ Route::get('/ukm/search', [UkmController::class, 'search'])->name('ukm.search');
 
 
 Route::get('/logout', 'LogoutController@logout')->name('logout');
+
+Route::get('/home/biodata', 'BiodataController@index')->name('home.biodata');
+Route::get('/home/biodata', 'BiodataController@show')->name('home.biodata');
+Route::get('/home/biodata', 'BiodataController@ticket')->name('home.biodata');
+Route::get('/ticket', [BiodataController::class, 'ticket'])->name('ticket');
+
 
 Route::middleware('auth')->group(function() {  
     Route::middleware(['role:Admin'])->group(function () {  
