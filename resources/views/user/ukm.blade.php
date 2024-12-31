@@ -175,7 +175,7 @@
                                         <span class="text-muted fs-6">{{ $ukm->kegiatan_count }} Proker</span>
                                         </li>
                                     </ul>
-                                    <a href="{{ route('home.ukm', ['ukm' => $ukm->id]) }}" class="btn btn-primary w-100">Detail UKM</a>
+                                    <a href="{{ route('welcome.ukm', ['ukm' => $ukm->id]) }}" class="btn btn-primary w-100">Detail UKM</a>
                                 </div>
                             </div>
                         </div><!--end items-->

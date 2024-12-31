@@ -36,27 +36,37 @@
                     </div>
                 </div>
                 
-                <ul class="buy-button list-inline mb-0">
+                <ul class="buy-button list-inline mb-0">  
 
-                    <li class="list-inline-item ps-1 mb-0">
-                        <a href="{{ route('home.myukm') }}" class="btn ">My UKM</a>
-                    </li>
+                    <li class="list-inline-item ps-1 mb-0">  
+                        <a href="{{ route('home.myukm') }}" class="btn">My UKM</a>  
+                    </li>  
 
-                    <li class="list-inline-item ps-1 mb-0">
-                        <a href="{{ route('home.myticket') }}" class="btn ">My Ticket</a>
-                    </li>
+                    <li class="list-inline-item ps-1 mb-0">  
+                        <a href="{{ route('home.myticket') }}" class="btn">My Ticket</a>  
+                    </li>  
 
-
-                    <li class="list-inline-item ps-1 mb-0">
-                        <a href="{{ route('logout') }}" class="btn ">Logout</a>
-                    </li>
+                    @if (Route::has('login'))  
+                        @auth  
+                            <li class="list-inline-item ps-1 mb-0">  
+                                <a href="{{ route('logout') }}" class="btn">Logout</a>  
+                            </li>  
+                        @else  
+                            <li class="list-inline-item ps-1 mb-0">  
+                                <a href="{{ route('login') }}" class="btn">Login</a>  
+                            </li>  
+                            <li class="list-inline-item ps-1 mb-0">  
+                                <a href="{{ route('register') }}" class="btn">Register</a>  
+                            </li>  
+                        @endauth  
+                    @endif  
 
                 </ul>
                 
                 <!-- <div id="navigation"> -->
                     <ul class="navigation-menu nav-left">
                     <li>
-                        <a class="logo center" href="{{ route('home') }}">
+                        <a class="logo center" href="{{ route('welcome') }}">
                             <img src="{{ asset('layout-member/images/logo-dark.png') }}" class="logo-light-mode" alt="">
                             <!-- <img src="{{ asset('layout-member/images/logo-light.png') }}" class="logo-dark-mode" alt=""> -->
                         </a>
@@ -67,14 +77,14 @@
                             <ul class="submenu">
                                 <li><a href="{{ route('ukm.listByCategory', ['kategori' => 'sosial']) }}" class="sub-menu-item">UKM Sosial</a></li>
                                 <li><a href="{{ route('ukm.listByCategory', ['kategori' => 'kesenian']) }}" class="sub-menu-item">UKM Kesenian</a></li>
-                                <li><a href="{{ route('ukm.listByCategory', ['kategori' => 'penalaran']) }} class="sub-menu-item">UKM Penalaran</a></li>
+                                <li><a href="{{ route('ukm.listByCategory', ['kategori' => 'penalaran']) }}" class="sub-menu-item">UKM Penalaran</a></li>
                                 <li><a href="{{ route('ukm.listByCategory', ['kategori' => 'olahraga']) }}" class="sub-menu-item">UKM Olahraga</a></li>
                                 <li><a href="{{ route('ukm.listByCategory', ['kategori' => 'kerohanian']) }}" class="sub-menu-item">UKM Kerohanian</a></li>
                             </ul>
                         </li>
                         
                         <li class="list-inline-item">
-                            <a href="{{ route('home.event') }}" class="btn ">Event</a>
+                            <a href="{{ route('welcome.event') }}" class="btn ">Event</a>
                         </li>
 
                         <!-- <li class="has-submenu parent-parent-menu-item">

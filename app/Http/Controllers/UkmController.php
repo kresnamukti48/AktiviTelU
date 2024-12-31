@@ -26,12 +26,6 @@ class UkmController extends Controller
         return view('user.ukmlist', compact('ukms', 'kategori'));  
     }  
 
-    //get by id user yang sedang login
-    public function showByUser()  
-    {  
-        $ukms = auth()->user()->ukm;
-        return view('user.myukm', compact('ukms'));  
-    }
 
     public function search(Request $request)  
     {  
@@ -49,7 +43,7 @@ class UkmController extends Controller
         // Periksa jika UKM ditemukan  
         if ($ukm) {  
             // Jika ditemukan, redirect ke halaman detail UKM  
-            return redirect()->route('home.ukm', ['ukm' => $ukm->id]); // Gantilah 'ukm.detail' dengan nama route detail yang sesuai  
+            return redirect()->route('welcome.ukm', ['ukm' => $ukm->id]); // Gantilah 'ukm.detail' dengan nama route detail yang sesuai  
         }  
 
         // Jika tidak ditemukan, kembali dengan pesan error  

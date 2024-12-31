@@ -31,8 +31,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+
     public function index()
-    {
+    {   
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
@@ -94,40 +95,12 @@ class HomeController extends Controller
                 'olahraga' => Ukm::where('kategori_ukm', 'olahraga')->count(),  
                 'kerohanian' => Ukm::where('kategori_ukm', 'kerohanian')->count(),  
             ];  
-            return view('user.home', compact('ukms', 'ukmCounts', 'ukmcount', 'kegiatan', 'event'));  
+            return view('welcome', compact('ukms', 'ukmCounts', 'ukmcount', 'kegiatan', 'event'));  
         }
 
         
     }
 
-    public function ukm(Ukm $ukm)  
-    {  
-        // Cek apakah pengguna sudah bergabung dengan UKM  
-        $hasJoinedUkm = Member::where('user_id', Auth::id())  
-            ->where('ukm_id', $ukm->id)  
-            ->exists();  
-    
-        // Muat data UKM dengan jumlah anggota, kegiatan, dan dosen  
-        $ukm->loadCount(['members', 'kegiatan', 'dosens']); // Pastikan ada relasi 'dosen' dalam model Ukm  
-    
-        // Ambil ketua dan wakil ketua  
-        $ketua = $ukm->members()->where('role_member', 'ketua')->with('user')->first();  
-        $wakilKetua = $ukm->members()->where('role_member', 'wakil ketua')->with('user')->first(); 
-        
-        $dosen = $ukm->dosens()->with('user')->first();
-    
-        // Ambil semua UKM  
-        $ukms = Ukm::withCount(['members', 'kegiatan'])->get();  
-    
-        return view('user.ukm', [  
-            'ukm' => $ukm,  
-            'hasJoinedUkm' => $hasJoinedUkm,  
-            'ukms' => $ukms,  
-            'ketua' => $ketua,  
-            'wakilKetua' => $wakilKetua,  
-            'dosen' => $dosen,
-        ]);  
-    }
 
     public function join(Request $request, Ukm $ukm)
     {
@@ -157,18 +130,18 @@ class HomeController extends Controller
             ]);
     }
 
-    public function event()  
+    public function showUkmByUser()  
     {  
-    
-        // Ambil semua event beserta info stok tiketnya  
-        $events = Event::with(['tiket' => function($query) {  
-            $query->select('event_id', 'stok_tiket', 'status', 'id'); // Ambil stok tiket dan status  
-        }])  
-        ->orderByDesc('created_at')  
-        ->get();  
-    
-        return view('user.event', [  
-            'events' => $events,  
-        ]);  
-    } 
+        
+        $ukms = auth()->user()->ukm;
+        return view('user.myukm', compact('ukms'));  
+    }
+
+    public function showTicketByUser()  
+    {  
+        $checkouts = auth()->user()->checkouts()  
+        ->where('status', 'success') 
+        ->get();
+        return view('user.myticket', compact('checkouts'));  
+    }
 }

@@ -38,7 +38,7 @@
                                 <a href="https://instagram.com/{{ $ukm->instagram_ukm }}" class="text-muted" target="_blank">Instagram</a>  
                             </div>  
 
-                            <a href="{{ route('home.ukm', ['ukm' => $ukm->id]) }}" class="btn btn-primary w-100">Detail UKM</a>
+                            <a href="{{ route('welcome.ukm', ['ukm' => $ukm->id]) }}" class="btn btn-primary w-100">Detail UKM</a>
 
 
                         
