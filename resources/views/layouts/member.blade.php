@@ -79,12 +79,11 @@
                             <!-- javascript:void(0) -->
                             <a href="index.blade.php">Kategori</a><span class="menu-arrow"></span>
                             <ul class="submenu">
-                                <li><a href="list.blade.php" class="sub-menu-item">UKM Sosial</a></li>
-                                <li><a href="list.blade.php" class="sub-menu-item">UKM Kesenian</a></li>
-                                <li><a href="list.blade.php" class="sub-menu-item">UKM Penalaran</a></li>
-                                <li><a href="list.blade.php" class="sub-menu-item">UKM Olahraga</a></li>
-                                <li><a href="list.blade.php" class="sub-menu-item">UKM Kerohanian</a></li>
-                                <li><a href="list.blade.php" class="sub-menu-item">Lainnya</a></li>
+                                <li><a href="{{ route('ukm.listByCategory', ['kategori' => 'sosial']) }}" class="sub-menu-item">UKM Sosial</a></li>
+                                <li><a href="{{ route('ukm.listByCategory', ['kategori' => 'kesenian']) }}" class="sub-menu-item">UKM Kesenian</a></li>
+                                <li><a href="{{ route('ukm.listByCategory', ['kategori' => 'penalaran']) }} class="sub-menu-item">UKM Penalaran</a></li>
+                                <li><a href="{{ route('ukm.listByCategory', ['kategori' => 'olahraga']) }}" class="sub-menu-item">UKM Olahraga</a></li>
+                                <li><a href="{{ route('ukm.listByCategory', ['kategori' => 'kerohanian']) }}" class="sub-menu-item">UKM Kerohanian</a></li>
                             </ul>
                         </li>
                         

@@ -6,7 +6,11 @@ use App\Models\Event;
 use App\Models\Member;
 use App\Models\Role;
 use App\Models\Ukm;
+use App\Models\Dosen;
+use App\Models\KegiatanUkm;
 use App\Models\User;
+use App\Models\Ticket;
+use App\Models\Checkout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,37 +33,100 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = User::count();
-
-        $widget = [
-            'users' => $users,
-            //...
-        ];
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        // Menampilkan halaman member
-        if ($user->hasRole(Role::ROLE_MEMBER)) {
-            return view('user.home', [
-                'ukms' => Ukm::all(),
-            ]);
+        if ($user->hasRole(Role::ROLE_ADMIN)) {
+            $users = User::count();
+            $dosens = Dosen::count();
+            $ukms = Ukm::count();
+            $member = Member::count();
+            $kegiatan = KegiatanUkm::count();
+            $event = Event::count();
+            $ticket = Ticket::count();
+            $checkout = Checkout::count();
+            $total = Checkout::where('status', 'success')->sum('total_harga');
+            $widget = [
+                'users' => $users,
+                'dosens' => $dosens,
+                'ukms' => $ukms,
+                'member' => $member,
+                'kegiatan' => $kegiatan,
+                'event' => $event,
+                'ticket' => $ticket,
+                'checkout' => $checkout,
+                'total' => $total,
+            ];
+            return view('dashboard_admin', compact('widget'));
+        } else if ($user->hasRole(Role::ROLE_PENGURUS)){
+            $ukms = auth()->user()->ukms();
+            $members = Member::whereIn('ukm_id', $ukms->pluck('id'))->count();
+            $kegiatan = KegiatanUkm::whereIn('ukm_id', $ukms->pluck('id'))->count();
+            $event = Event::whereIn('ukm_id', $ukms->pluck('id'))->count();
+            $eventIds = Event::whereIn('ukm_id', $ukms->pluck('id'))->pluck('id'); // Mendapatkan ID event berdasarkan UKM  
+            $ticket = Ticket::whereIn('event_id', $eventIds)->count();
+            $checkout = Checkout::whereHas('tiket', function($query) use ($eventIds) {  
+                $query->whereIn('event_id', $eventIds);  
+            })->count();
+            $total = Checkout::where('status', 'success')->whereHas('tiket', function($query) use ($eventIds) {  
+                $query->whereIn('event_id', $eventIds);  
+            })->sum('total_harga');
+            $widget = [
+                'members' => $members,
+                'kegiatan' => $kegiatan,
+                'event' => $event,
+                'ticket' => $ticket,
+                'checkout' => $checkout,
+                'total' => $total,
+            ];
+            return view('dashboard_pengurus', compact('widget'));
+
+        } else if ($user->hasRole(Role::ROLE_MEMBER)) {  
+            $ukms = Ukm::withCount(['members', 'kegiatan'])->get();   
+            $ukmcount = Ukm::count();
+            $kegiatan = KegiatanUkm::count();  
+            $event = Event::count();
+            $ukmCounts = [  
+                'sosial' => Ukm::where('kategori_ukm', 'sosial')->count(),  
+                'kesenian' => Ukm::where('kategori_ukm', 'kesenian')->count(),  
+                'penalaran' => Ukm::where('kategori_ukm', 'penalaran')->count(),  
+                'olahraga' => Ukm::where('kategori_ukm', 'olahraga')->count(),  
+                'kerohanian' => Ukm::where('kategori_ukm', 'kerohanian')->count(),  
+            ];  
+            return view('user.home', compact('ukms', 'ukmCounts', 'ukmcount', 'kegiatan', 'event'));  
         }
 
-        return view('home', compact('widget'));
+        
     }
 
-    public function ukm(Ukm $ukm)
-    {
-        $hasJoinedUkm = Member::where('user_id', Auth::id())
-            ->where('ukm_id', $ukm->id)
-            ->exists();
-
-        return view('user.ukm', [
-            'ukm' => $ukm,
-            'hasJoinedUkm' => $hasJoinedUkm,
-            'ukms' => Ukm::all(),
-        ]);
+    public function ukm(Ukm $ukm)  
+    {  
+        // Cek apakah pengguna sudah bergabung dengan UKM  
+        $hasJoinedUkm = Member::where('user_id', Auth::id())  
+            ->where('ukm_id', $ukm->id)  
+            ->exists();  
+    
+        // Muat data UKM dengan jumlah anggota, kegiatan, dan dosen  
+        $ukm->loadCount(['members', 'kegiatan', 'dosens']); // Pastikan ada relasi 'dosen' dalam model Ukm  
+    
+        // Ambil ketua dan wakil ketua  
+        $ketua = $ukm->members()->where('role_member', 'ketua')->with('user')->first();  
+        $wakilKetua = $ukm->members()->where('role_member', 'wakil ketua')->with('user')->first(); 
+        
+        $dosen = $ukm->dosens()->with('user')->first();
+    
+        // Ambil semua UKM  
+        $ukms = Ukm::withCount(['members', 'kegiatan'])->get();  
+    
+        return view('user.ukm', [  
+            'ukm' => $ukm,  
+            'hasJoinedUkm' => $hasJoinedUkm,  
+            'ukms' => $ukms,  
+            'ketua' => $ketua,  
+            'wakilKetua' => $wakilKetua,  
+            'dosen' => $dosen,
+        ]);  
     }
 
     public function join(Request $request, Ukm $ukm)

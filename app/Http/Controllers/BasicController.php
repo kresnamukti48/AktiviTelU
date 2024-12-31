@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Exports\UserExport;
+use Maatwebsite\Excel\Facades\Excel; 
 
 class BasicController extends Controller
 {
@@ -19,7 +21,7 @@ class BasicController extends Controller
     public function index()
     {
         return view('basic.list', [
-            'title' => 'Basic CRUD',
+            'title' => 'User CRUD',
             'users' => User::paginate(10)
         ]);
     }
@@ -117,5 +119,12 @@ class BasicController extends Controller
         $basic->delete();
 
         return redirect()->route('basic.index')->with('message', 'User deleted successfully!');
+    }
+
+    public function export(Request $request)  
+    {  
+        $user = User::all();
+    
+        return Excel::download(new UserExport($user), 'users.xlsx');
     }
 }

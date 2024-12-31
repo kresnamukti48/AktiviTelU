@@ -18,6 +18,36 @@ class UkmController extends Controller
         return view('ukms.index', compact('ukms'));  
     }  
 
+    public function listByCategory($kategori)  
+    {  
+        // Ambil UKM berdasarkan kategori  
+        $ukms = UKM::where('kategori_ukm', $kategori)->get(); // Pastikan kolom kategori sesuai  
+        return view('user.ukmlist', compact('ukms', 'kategori'));  
+    }  
+
+    public function search(Request $request)  
+    {  
+        // Validasi input nama  
+        $request->validate([  
+            'name' => 'required|string|max:255',  
+        ]);  
+
+        // Ambil nama yang dicari  
+        $name = $request->input('name');  
+
+        // Mencari UKM berdasarkan nama yang diberikan  
+        $ukm = Ukm::where('nama_ukm', 'LIKE', "%{$name}%")->first(); // Menggunakan LIKE untuk pencarian yang flexible  
+
+        // Periksa jika UKM ditemukan  
+        if ($ukm) {  
+            // Jika ditemukan, redirect ke halaman detail UKM  
+            return redirect()->route('home.ukm', ['ukm' => $ukm->id]); // Gantilah 'ukm.detail' dengan nama route detail yang sesuai  
+        }  
+
+        // Jika tidak ditemukan, kembali dengan pesan error  
+        return redirect()->back()->with('error', 'UKM tidak ditemukan.');  
+    }  
+
     /**  
      * Show the form for creating a new resource.  
      */  

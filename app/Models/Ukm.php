@@ -9,4 +9,19 @@ class Ukm extends Model
 {
     use HasFactory;
     protected $fillable = ['nama_ukm', 'deskripsi_ukm', 'kategori_ukm', 'instagram_ukm', 'email_ukm', 'logo_ukm'];
+
+    public function members()  
+    {  
+        return $this->hasMany(Member::class, 'ukm_id'); // Pastikan mengganti 'ukm_id' dengan nama kolom yang sesuai  
+    }  
+
+    public function kegiatan()  
+    {  
+        return $this->hasMany(KegiatanUkm::class, 'ukm_id'); // Pastikan mengganti 'ukm_id' dengan nama kolom yang sesuai  
+    }  
+
+    public function dosens()  
+    {  
+        return $this->hasMany(Dosen::class, 'ukm_id'); // 1 UKM memiliki banyak dosen  
+    }  
 }

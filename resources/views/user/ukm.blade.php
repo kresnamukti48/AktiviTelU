@@ -65,14 +65,15 @@
                             <li class="list-inline-item">
                                 <span class="d-flex align-items-center me-4">
                                     <i class="mdi mdi-account-check fs-4 me-2 text-primary"></i>
-                                    <span class="text-muted fs-5">{{ fake()->randomNumber(3) }} Orang</span>
+                                    <span class="text-muted fs-5">{{ $ukm->members_count }} Orang</span>
                                 </span>
                             </li>
+
 
                             <li class="list-inline-item">
                                 <span class="d-flex align-items-center">
                                     <i class="mdi mdi-content-paste fs-4 me-2 text-primary"></i>
-                                    <span class="text-muted fs-5">{{ fake()->randomNumber(1) }} Proker</span>
+                                    <span class="text-muted fs-5">{{ $ukm->kegiatan_count }} Proker</span>
                                 </span>
                             </li>
                         </ul>
@@ -94,20 +95,20 @@
                         <h5 class="mb-3">Pengurus:</h5>
 
                         <div class="">
-                            <div class="d-flex align-items-center justify-content-between mt-2">
-                                <span class="small text-muted">Dosen Pembina </span>
-                                <span class="small">Mr. Lavio</span>
-                            </div>
+                            <div class="d-flex align-items-center justify-content-between mt-2">  
+                                <span class="small text-muted">Dosen Pembina:</span>  
+                                <span class="small">{{ $dosen->user->name ?? 'Tidak ada' }}</span> <!-- Ambil nama dosen -->  
+                            </div>  
 
-                            <div class="d-flex align-items-center justify-content-between mt-2">
-                                <span class="small text-muted">Ketua</span>
-                                <span class="small">Mr. Kresna</span>
-                            </div>
+                            <div class="d-flex align-items-center justify-content-between mt-2">  
+                                <span class="small text-muted">Ketua:</span>  
+                                <span class="small">{{ $ketua->user->name ?? 'Tidak ada' }}</span> <!-- Ambil nama ketua -->  
+                            </div>  
 
-                            <div class="d-flex align-items-center justify-content-between mt-2">
-                                <span class="small text-muted">Wakil Ketua</span>
-                                <span class="small">Mr. Kevin</span>
-                            </div>
+                            <div class="d-flex align-items-center justify-content-between mt-2">  
+                                <span class="small text-muted">Wakil Ketua:</span>  
+                                <span class="small">{{ $wakilKetua->user->name ?? 'Tidak ada' }}</span> <!-- Ambil nama wakil ketua -->  
+                            </div>  
                         </div>
 
                         <div class="d-flex mt-3">
@@ -171,17 +172,12 @@
                                     <ul class="list-unstyled mt-3 py-3 border-top border-bottom d-flex align-items-center justify-content-between">
                                         <li class="d-flex align-items-center me-3">
                                             <i class="mdi mdi-account-check fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted fs-6">{{ fake()->randomNumber(3) }} Orang</span>
-                                        </li>
-
-                                        <li class="d-flex align-items-center me-3">
-                                            <i class="mdi mdi-account-multiple fs-5 me-2 text-primary"></i>
-                                        <span class="text-muted fs-6">{{ fake()->randomNumber(1) }} Divisi</span>
+                                            <span class="text-muted fs-6">{{ $ukm->members_count }} Orang</span>
                                         </li>
 
                                         <li class="d-flex align-items-center">
                                             <i class="mdi mdi-content-paste fs-5 me-2 text-primary"></i>
-                                        <span class="text-muted fs-6">{{ fake()->randomNumber(1) }} Proker</span>
+                                        <span class="text-muted fs-6">{{ $ukm->kegiatan_count }} Proker</span>
                                         </li>
                                     </ul>
                                     <a href="{{ route('home.ukm', ['ukm' => $ukm->id]) }}" class="btn btn-primary w-100">Detail UKM</a>

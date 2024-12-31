@@ -13,15 +13,16 @@
                         <div class="col-12">
                             <div class="title-heading">
                                 <h4 class="heading fw-bold text-white title-dark mb-3">Ayo Berorganisasi!</h4>
-                                <p class="para-desc text-white title-dark mb-0">Silahkan cari UKM yang ingin diikuti</p>
+                                    <p class="para-desc text-white title-dark mb-0">Silahkan cari UKM yang ingin diikuti</p>  
 
-                                <div class="subscribe-form mt-4">
-                                    <form class="me-auto">
-                                        <div class="mb-0">
-                                            <input type="text" id="help" name="name" class="shadow rounded-3 bg-white" required="" placeholder="Nama UKM">
-                                            <button type="submit" class="btn btn-primary rounded-3">Search</button>
-                                        </div>
-                                    </form>
+                                    <div class="subscribe-form mt-4">  
+                                        <form class="me-auto" action="{{ route('ukm.search') }}" method="GET">  
+                                            <div class="mb-0">  
+                                                <input type="text" id="help" name="name" class="shadow rounded-3 bg-white" required placeholder="Nama UKM">  
+                                                <button type="submit" class="btn btn-primary rounded-3">Search</button>  
+                                            </div>  
+                                        </form>  
+                                    </div>  
                                 </div>
                             </div>
                         </div>
@@ -39,59 +40,64 @@
                 <div class="col-12 mt-sm-0 pt-sm-0">
                     <div class="features-absolute">
                         <div class="row row-cols-lg-5 row-cols-md-3 row-cols-sm-2 row-cols-1 g-4 mt-0">
-                            <div class="col">
-                                <div class="categories position-relative overflow-hidden rounded-3 shadow">
+
+
+                            <div class="col">  
+                                <div class="categories position-relative overflow-hidden rounded-3 shadow">  
                                     <img src="{{ asset('layout-member/images/property/UKM Sosial.jpg') }}" class="img-fluid" alt="">
-                                    <div class="p-3">
-                                        <a href="list.blade.php" class="title text-dark fs-5 fw-medium">UKM Sosial</a>
-                                        <p class="text-muted small mb-0">6 UKM</p>
-                                    </div>
-                                </div>
-                            </div><!--end col-->
+                                    <div class="p-3">  
+                                        <a href="{{ route('ukm.listByCategory', ['kategori' => 'sosial']) }}" class="title text-dark fs-5 fw-medium">UKM Sosial</a>  
+                                        <p class="text-muted small mb-0">{{ $ukmCounts['sosial'] }} UKM</p>  
+                                    </div>  
+                                </div>  
+                            </div>
 
-                            <div class="col">
-                                <div class="categories position-relative overflow-hidden rounded-3 shadow">
+
+
+                            <div class="col">  
+                                <div class="categories position-relative overflow-hidden rounded-3 shadow">  
                                     <img src="{{ asset('layout-member/images/property/UKM Kesenian.jpg') }}" class="img-fluid" alt="">
+                                    <div class="p-3">  
+                                        <a href="{{ route('ukm.listByCategory', ['kategori' => 'kesenian']) }}" class="title text-dark fs-5 fw-medium">UKM Kesenian</a>  
+                                        <p class="text-muted small mb-0">{{ $ukmCounts['kesenian'] }} UKM</p>  
+                                    </div>  
+                                </div>  
+                            </div>
 
-                                    <div class="p-3">
-                                        <a href="list.blade.php" class="title text-dark fs-5 fw-medium">UKM Kesenian</a>
-                                        <p class="text-muted small mb-0">21 UKM</p>
-                                    </div>
-                                </div>
-                            </div><!--end col-->
 
-                            <div class="col">
-                                <div class="categories position-relative overflow-hidden rounded-3 shadow">
-                                    <img src="{{ asset('layout-member/images/property/UKM Penalaran.jpg') }}" class="img-fluid" alt="">
+                            <div class="col">  
+                                <div class="categories position-relative overflow-hidden rounded-3 shadow">  
+                                    <img src="{{ asset('layout-member/images/property/UKM Penalaran.jpg') }}" class="img-fluid" alt=""> 
+                                    <div class="p-3">  
+                                        <a href="{{ route('ukm.listByCategory', ['kategori' => 'penalaran']) }}" class="title text-dark fs-5 fw-medium">UKM Penalaran</a>  
+                                        <p class="text-muted small mb-0">{{ $ukmCounts['penalaran'] }} UKM</p>  
+                                    </div>  
+                                </div>  
+                            </div>
 
-                                    <div class="p-3">
-                                        <a href="list.blade.php" class="title text-dark fs-5 fw-medium">UKM Penalaran</a>
-                                        <p class="text-muted small mb-0">8 UKM</p>
-                                    </div>
-                                </div>
-                            </div><!--end col-->
 
-                            <div class="col">
-                                <div class="categories position-relative overflow-hidden rounded-3 shadow">
-                                    <img src="{{ asset('layout-member/images/property/UKM Olahraga.jpg') }}" class="img-fluid" alt="">
+                            <div class="col">  
+                                <div class="categories position-relative overflow-hidden rounded-3 shadow">  
+                                    <img src="{{ asset('layout-member/images/property/UKM Olahraga.jpg') }}" class="img-fluid" alt="">  
+                                    <div class="p-3">  
+                                        <a href="{{ route('ukm.listByCategory', ['kategori' => 'olahraga']) }}" class="title text-dark fs-5 fw-medium">UKM Olahraga</a>  
+                                        <p class="text-muted small mb-0">{{ $ukmCounts['olahraga'] }} UKM</p>  
+                                    </div>  
+                                </div>  
+                            </div>
 
-                                    <div class="p-3">
-                                        <a href="list.blade.php" class="title text-dark fs-5 fw-medium">UKM Olahraga</a>
-                                        <p class="text-muted small mb-0">13 UKM</p>
-                                    </div>
-                                </div>
-                            </div><!--end col-->
 
-                            <div class="col">
-                                <div class="categories position-relative overflow-hidden rounded-3 shadow">
-                                    <img src="{{ asset('layout-member/images/property/UKM Kerohanian.jpg') }}" class="img-fluid" alt="">
 
-                                    <div class="p-3">
-                                        <a href="list.blade.php" class="title text-dark fs-5 fw-medium">UKM Kerohanian</a>
-                                        <p class="text-muted small mb-0">3 UKM</p>
-                                    </div>
-                                </div>
-                            </div><!--end col-->
+                            <div class="col">  
+                                <div class="categories position-relative overflow-hidden rounded-3 shadow">  
+                                    <img src="{{ asset('layout-member/images/property/UKM Kerohanian.jpg') }}" class="img-fluid" alt=""> 
+                                    <div class="p-3">  
+                                        <a href="{{ route('ukm.listByCategory', ['kategori' => 'kerohanian']) }}" class="title text-dark fs-5 fw-medium">UKM Kerohanian</a>  
+                                        <p class="text-muted small mb-0">{{ $ukmCounts['kerohanian'] }} UKM</p>  
+                                    </div>  
+                                </div>  
+                            </div>
+
                         </div><!--end row-->
                     </div>
                 </div><!--end col-->
@@ -167,12 +173,12 @@
                                     <ul class="list-unstyled mt-3 py-3 border-top border-bottom d-flex align-items-center justify-content-between">
                                         <li class="d-flex align-items-center me-3">
                                             <i class="mdi mdi-account-check fs-5 me-2 text-primary"></i>
-                                            <span class="text-muted fs-6">{{ fake()->randomNumber(3) }} Orang</span>
+                                            <span class="text-muted fs-6">{{ $ukm->members_count }} Orang</span>
                                         </li>
 
                                         <li class="d-flex align-items-center">
                                             <i class="mdi mdi-content-paste fs-5 me-2 text-primary"></i>
-                                        <span class="text-muted fs-6">{{ fake()->randomNumber(1) }} Proker</span>
+                                        <span class="text-muted fs-6">{{ $ukm->kegiatan_count }} Proker</span>
                                         </li>
                                     </ul>
                                     <a href="{{ route('home.ukm', ['ukm' => $ukm->id]) }}" class="btn btn-primary w-100">Detail UKM</a>
@@ -197,33 +203,35 @@
                 <div class="bg-overlay"></div>
                 <div class="container">
                     <div class="row">
-                        <div class="col py-4">
-                            <div class="counter-box text-center">
-                                <h1 class="mb-0 text-white fw-bold"><span class="counter-value" data-target="50">1</span>+</h1>
-                                <h6 class="counter-head text-white fs-5 fw-semibold mb-0">UKM</h6>
-                            </div><!--end counter box-->
-                        </div><!--end col-->
 
-                        <div class="col py-4">
-                            <div class="counter-box text-center">
-                                <h1 class="mb-0 text-white fw-bold"><span class="counter-value" data-target="5">1</span></h1>
-                                <h6 class="counter-head text-white fs-5 fw-semibold mb-0">Kategori</h6>
-                            </div><!--end counter box-->
-                        </div><!--end col-->
+                      <div class="col py-4">  
+                          <div class="counter-box text-center">  
+                              <h1 class="mb-0 text-white fw-bold"><span class="counter-value" data-target="{{ $ukmcount }}">{{ $ukmcount }}</span></h1>  
+                              <h6 class="counter-head text-white fs-5 fw-semibold mb-0">UKM</h6>  
+                          </div><!--end counter box-->  
+                      </div><!--end col-->  
 
-                        <div class="col py-4">
-                            <div class="counter-box text-center">
-                                <h1 class="mb-0 text-white fw-bold"><span class="counter-value" data-target="33">1</span>+</h1>
-                                <h6 class="counter-head text-white fs-5 fw-semibold mb-0">Kegiatan</h6>
-                            </div>
-                        </div>
+                      <div class="col py-4">  
+                          <div class="counter-box text-center">  
+                              <h1 class="mb-0 text-white fw-bold"><span class="counter-value" data-target="5">5</span></h1>  
+                              <h6 class="counter-head text-white fs-5 fw-semibold mb-0">Kategori</h6>  
+                          </div><!--end counter box-->  
+                      </div><!--end col-->  
 
-                        <div class="col py-4">
-                            <div class="counter-box text-center">
-                                <h1 class="mb-0 text-white fw-bold"><span class="counter-value" data-target="13">1</span>+</h1>
-                                <h6 class="counter-head text-white fs-5 fw-semibold mb-0">Event</h6>
-                            </div>
-                        </div>
+                      <div class="col py-4">  
+                          <div class="counter-box text-center">  
+                              <h1 class="mb-0 text-white fw-bold"><span class="counter-value" data-target="{{ $kegiatan }}">{{ $kegiatan }}</span></h1>  
+                              <h6 class="counter-head text-white fs-5 fw-semibold mb-0">Kegiatan</h6>  
+                          </div>  
+                      </div>  
+
+                      <div class="col py-4">  
+                          <div class="counter-box text-center">  
+                              <h1 class="mb-0 text-white fw-bold"><span class="counter-value" data-target="{{ $event }}">{{ $event }}</span></h1>  
+                              <h6 class="counter-head text-white fs-5 fw-semibold mb-0">Event</h6>  
+                          </div>  
+                      </div>
+                      
                     </div><!--end row-->
                 </div><!--end container-->
             </div>
@@ -454,5 +462,13 @@
 	    <!-- Custom -->
 	    <script src="js/plugins.init.js"></script>
 	    <script src="js/app.js"></script>
+        <script>  
+        $(document).ready(function() {  
+            // Mengecek apakah ada session error  
+            @if (session('error'))  
+                alert("{{ session('error') }}"); // Menampilkan pesan error  
+            @endif  
+        });  
+    </script>  
     </body>
 </html>

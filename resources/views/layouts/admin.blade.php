@@ -157,11 +157,11 @@
         <!-- End of Main Content -->
 
         <!-- Footer -->
-        <footer class="sticky-footer bg-white">
+        <footer class="sticky-footer bg-white" style="position: absolute; bottom: 0; width: 100%;">
             <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Kelompok 4</span>
-                </div>
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Kelompok 4</span>
+            </div>
             </div>
         </footer>
         <!-- End of Footer -->

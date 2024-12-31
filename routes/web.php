@@ -11,6 +11,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TicketController; 
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\BiodataController;
+use App\Http\Controllers\BasicController;
+
 
 /*  
 |--------------------------------------------------------------------------  
@@ -34,6 +36,10 @@ Route::post('/home/ukm/{ukm}', 'HomeController@join')->name('home.ukm.join');
 Route::get('/home/event', 'HomeController@event')->name('home.event');
 Route::post('/home/event/{event}', 'HomeController@joinEvent')->name('home.event.join');
 
+Route::get('/home/ukm/kategori/{kategori}', [UkmController::class, 'listByCategory'])->name('ukm.listByCategory');
+Route::get('/ukm/search', [UkmController::class, 'search'])->name('ukm.search');  
+
+
 Route::get('/logout', 'LogoutController@logout')->name('logout');
 
 Route::get('/home/biodata', 'BiodataController@index')->name('home.biodata');
@@ -43,7 +49,10 @@ Route::get('/ticket', [BiodataController::class, 'ticket'])->name('ticket');
 
 
 Route::middleware('auth')->group(function() {  
-    Route::resource('basic', BasicController::class);  
+    Route::middleware(['role:Admin'])->group(function () {  
+        Route::get('/export', [BasicController::class, 'export'])->name('basic.export');
+        Route::resource('basic', BasicController::class);
+    });  
     
     Route::middleware(['role:Admin'])->prefix('ukm')->group(function () {  
         Route::get('/export', [UkmController::class, 'export'])->name('ukms.export');
@@ -112,6 +121,7 @@ Route::middleware('auth')->group(function() {
     });  
 
     Route::middleware(['role:Admin|Pengurus|Member'])->prefix('checkout')->group(function () {
+        Route::get('/export', [CheckoutController::class, 'export'])->name('checkouts.export');
         Route::get('/', [CheckoutController::class, 'index'])->name('checkouts.index');
         Route::post('/', [CheckoutController::class, 'processCheckout'])->name('checkout.process');  
     }); 
