@@ -27,18 +27,19 @@ use App\Http\Controllers\BasicController;
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
 
-Route::prefix('home')->group(function () {
-    Route::get('/', 'WelcomeController@index')->name('home');
-    Route::get('/ukm/{ukm}', 'WelcomeController@ukm')->name('welcome.ukm');
-    Route::post('/ukm/{ukm}', 'HomeController@join')->name('home.ukm.join');
-    Route::get('/event', 'WelcomeController@event')->name('welcome.event');
-    Route::post('/event/{event}', 'HomeController@joinEvent')->name('home.event.join');
-    Route::get('/ukm/kategori/{kategori}', [UkmController::class, 'listByCategory'])->name('ukm.listByCategory');
-    Route::get('/myukm', [HomeController::class, 'showUkmByUser'])->name('home.myukm');
-    Route::get('/myticket', [HomeController::class, 'showTicketByUser'])->name('home.myticket');
-});
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/ukm/{ukm}', 'WelcomeController@ukm')->name('welcome.ukm');
+Route::post('/home/ukm/{ukm}', 'HomeController@join')->name('home.ukm.join');
+Route::get('/home/event', 'WelcomeController@event')->name('welcome.event');
+Route::post('/home/event/{event}', 'HomeController@joinEvent')->name('home.event.join');
+Route::get('/home/ukm/kategori/{kategori}', [UkmController::class, 'listByCategory'])->name('ukm.listByCategory');
+
+
 Route::get('/ukm/search', [UkmController::class, 'search'])->name('ukm.search');  
 
+
+Route::get('/myukm', [HomeController::class, 'showUkmByUser'])->name('home.myukm');
+Route::get('/myticket', [HomeController::class, 'showTicketByUser'])->name('home.myticket');
 
 Route::get('/logout', 'LogoutController@logout')->name('logout');
 
