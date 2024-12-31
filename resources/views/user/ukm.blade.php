@@ -1,45 +1,29 @@
 @extends('layouts.member')
 
 @section('content')
-    <!-- Start -->
-    <section class="section mt-5 pt-4">
-        <div class="container-fluid mt-2">
-            <div class="row g-2">
-                <div class="col-md-6">
-                    <a href="{{ asset('layout-member/images/property/single/1.jpg') }}" class="lightbox" title="">
-                        <img src="{{ asset('layout-member/images/property/single/1.jpg') }}" class="img-fluid rounded-3 shadow" alt="">
-                    </a>
-                </div><!--end col-->
-
-                <div class="col-md-6">
-                    <div class="row g-2">
-                        <div class="col-6">
-                            <a href="{{ asset('layout-member/images/property/single/2.jpg') }}" class="lightbox" title="">
-                                <img src="{{ asset('layout-member/images/property/single/2.jpg') }}" class="img-fluid rounded-3 shadow" alt="">
-                            </a>
-                        </div>
-
-                        <div class="col-6">
-                            <a href="{{ asset('layout-member/images/property/single/3.jpg') }}" class="lightbox" title="">
-                                <img src="{{ asset('layout-member/images/property/single/3.jpg') }}" class="img-fluid rounded-3 shadow" alt="">
-                            </a>
-                        </div>
-
-                        <div class="col-6">
-                            <a href="{{ asset('layout-member/images/property/single/4.jpg') }}" class="lightbox" title="">
-                                <img src="{{ asset('layout-member/images/property/single/4.jpg') }}" class="img-fluid rounded-3 shadow" alt="">
-                            </a>
-                        </div>
-
-                        <div class="col-6">
-                            <a href="{{ asset('layout-member/images/property/single/5.jpg') }}" class="lightbox" title="">
-                                <img src="{{ asset('layout-member/images/property/single/5.jpg') }}" class="img-fluid rounded-3 shadow" alt="">
-                            </a>
-                        </div>
-                    </div>
-                </div><!--end col-->
-            </div><!--end row-->
-        </div><!--end container-->
+<section class="section mt-5 pt-4">
+    <div class="container">
+        @foreach($kegiatan as $key => $item)
+        @if($key == 0)
+        <div class="">
+            <a href="{{ asset($item->gambar_kegiatan) }}" class="lightbox" title="" style="max-width: 5000px; width: 100%;" alt="Centered Image">
+                <img src="{{ asset($item->gambar_kegiatan) }}" class="img-fluid rounded-3 shadow" style="max-width: 5000px; width: 100%; object-fit: cover;" alt="Centered Image">
+            </a>
+    </div>
+        </div><!--end col-->
+        @elseif($key > 0)
+                    <!-- Display in smaller columns for the next 4 photos -->
+                    <div class="col-md-6">
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <a href="{{ asset($item->gambar_kegiatan) }}" class="lightbox" title="">
+                                    <img src="{{ asset($item->gambar_kegiatan) }}" class="img-fluid rounded-3 shadow" alt="" style="width: 1200px; height: 750px; object-fit: cover;">
+                                </a>
+                            </div>
+                    </div><!--end col-->
+                @endif
+            @endforeach
+    </div><!--end container-->
 
         <div class="container mt-100 mt-60">
             @if (session()->has('success'))
@@ -117,8 +101,6 @@
                         </div>
 
                         <div class="d-flex mt-3">
-                            <a href="javascript:void(0)" class="btn btn-primary w-100 me-2">Struktur Organisasi</a>
-
                             <a
                                 href="javascript:void(0)"
                                 @class([

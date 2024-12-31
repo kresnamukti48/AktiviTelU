@@ -38,7 +38,7 @@ class WelcomeController extends Controller
         // Ambil ketua dan wakil ketua  
         $ketua = $ukm->members()->where('role_member', 'ketua')->with('user')->first();  
         $wakilKetua = $ukm->members()->where('role_member', 'wakil ketua')->with('user')->first(); 
-        
+        $kegiatan = $ukm->kegiatan()->take(5)->get();
         $dosen = $ukm->dosens()->with('user')->first();
     
         // Ambil semua UKM  
@@ -58,6 +58,7 @@ class WelcomeController extends Controller
             'ketua' => $ketua,  
             'wakilKetua' => $wakilKetua,  
             'dosen' => $dosen,
+            'kegiatan' => $kegiatan,
         ]);  
     }
     
